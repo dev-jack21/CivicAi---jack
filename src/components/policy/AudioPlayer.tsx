@@ -74,6 +74,13 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target !== playerRef.current &&
+        (target.tagName === 'BUTTON' || target.tagName === 'SELECT' || target.tagName === 'INPUT')
+      )
+        return;
+
       switch (e.key) {
         case ' ':
           e.preventDefault();
@@ -154,10 +161,13 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
 
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
+  const controlBtn =
+    'inline-flex items-center justify-center min-h-11 min-w-11 gap-1 px-3 text-sm font-medium text-text-secondary hover:text-text-primary rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary';
+
   return (
     <div
       ref={playerRef}
-      className="w-full bg-gray-50 border border-border-custom rounded-lg p-4 space-y-3"
+      className="w-full max-w-full bg-gray-50 border border-border-custom rounded-lg p-4 sm:p-5 space-y-4"
       role="application"
       aria-label={`Audio player for ${title}`}
       tabIndex={0}
@@ -165,9 +175,9 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
     >
       <audio ref={audioRef} src={src} preload="metadata" />
 
-      {/* Progress bar */}
+      {/* Progress bar — taller on mobile for easier touch */}
       <div
-        className="relative h-2 bg-gray-200 rounded-full cursor-pointer group"
+        className="relative h-3 sm:h-2 bg-gray-200 rounded-full cursor-pointer group"
         onClick={handleProgressClick}
         role="slider"
         aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
@@ -181,55 +191,49 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
           style={{ width: `${progressPercent}%` }}
         />
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ left: `calc(${progressPercent}% - 8px)` }}
+          className="absolute top-1/2 -translate-y-1/2 w-5 h-5 sm:w-4 sm:h-4 bg-primary rounded-full shadow sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+          style={{ left: `calc(${progressPercent}% - 10px)` }}
         />
       </div>
 
       {/* Time display */}
-      <div className="flex items-center justify-between text-xs text-text-secondary">
+      <div className="flex items-center justify-between text-sm sm:text-xs text-text-secondary">
         <span>{formatTime(currentTime)}</span>
         <span>{formatTime(duration)}</span>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center justify-center gap-3 flex-wrap">
-        <button
-          onClick={() => seek(-10)}
-          className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-text-secondary hover:text-text-primary rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-          aria-label="Rewind 10 seconds"
-        >
-          <SkipBack className="w-4 h-4" aria-hidden="true" />
-          <span className="text-xs">10s</span>
+      {/* Primary transport controls — large on mobile */}
+      <div className="flex items-center justify-center gap-4 sm:gap-3">
+        <button onClick={() => seek(-10)} className={controlBtn} aria-label="Rewind 10 seconds">
+          <SkipBack className="w-5 h-5 sm:w-4 sm:h-4" aria-hidden="true" />
+          <span className="text-sm sm:text-xs">10s</span>
         </button>
 
         <button
           onClick={togglePlay}
-          className="flex items-center justify-center w-12 h-12 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          className="inline-flex items-center justify-center min-h-[3.25rem] min-w-[3.25rem] sm:min-h-12 sm:min-w-12 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           aria-label={
             playing ? `Pause audio narration of ${title}` : `Play audio narration of ${title}`
           }
         >
           {playing ? (
-            <Pause className="w-5 h-5" aria-hidden="true" />
+            <Pause className="w-6 h-6 sm:w-5 sm:h-5" aria-hidden="true" />
           ) : (
-            <Play className="w-5 h-5 ml-0.5" aria-hidden="true" />
+            <Play className="w-6 h-6 sm:w-5 sm:h-5 ml-0.5" aria-hidden="true" />
           )}
         </button>
 
-        <button
-          onClick={() => seek(10)}
-          className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-text-secondary hover:text-text-primary rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-          aria-label="Forward 10 seconds"
-        >
-          <span className="text-xs">10s</span>
-          <SkipForward className="w-4 h-4" aria-hidden="true" />
+        <button onClick={() => seek(10)} className={controlBtn} aria-label="Forward 10 seconds">
+          <span className="text-sm sm:text-xs">10s</span>
+          <SkipForward className="w-5 h-5 sm:w-4 sm:h-4" aria-hidden="true" />
         </button>
+      </div>
 
-        {/* Speed selector */}
-        <div className="flex items-center gap-1">
-          <label htmlFor="speed-select" className="sr-only">
-            Playback speed
+      {/* Secondary controls — full-width row on mobile */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 sm:flex-wrap">
+        <div className="flex items-center justify-between sm:justify-center gap-2">
+          <label htmlFor="speed-select" className="text-sm text-text-secondary shrink-0">
+            Speed
           </label>
           <select
             id="speed-select"
@@ -239,7 +243,7 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
               setPlaybackRate(rate);
               if (audioRef.current) audioRef.current.playbackRate = rate;
             }}
-            className="text-xs px-2 py-1 border border-border-custom rounded-md bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 sm:flex-none min-h-11 text-sm px-3 py-2 border border-border-custom rounded-md bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="0.5">0.5x</option>
             <option value="1">1x</option>
@@ -248,17 +252,16 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
           </select>
         </div>
 
-        {/* Volume */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2 flex-1 sm:flex-none">
           <button
             onClick={toggleMute}
-            className="p-1.5 text-text-secondary hover:text-text-primary rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+            className={controlBtn}
             aria-label={muted ? 'Unmute' : 'Mute'}
           >
             {muted || volume === 0 ? (
-              <VolumeX className="w-4 h-4" aria-hidden="true" />
+              <VolumeX className="w-5 h-5 sm:w-4 sm:h-4" aria-hidden="true" />
             ) : (
-              <Volume2 className="w-4 h-4" aria-hidden="true" />
+              <Volume2 className="w-5 h-5 sm:w-4 sm:h-4" aria-hidden="true" />
             )}
           </button>
           <input
@@ -276,19 +279,19 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
               setVolume(val);
               setMuted(val === 0);
             }}
-            className="w-20 h-1.5 accent-primary"
+            className="flex-1 sm:w-24 min-h-11 accent-primary"
             aria-label="Volume"
           />
         </div>
 
-        {/* Download */}
         <a
           href={src}
           download
-          className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-text-secondary hover:text-text-primary rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          className={`${controlBtn} justify-center sm:justify-start`}
           aria-label="Download audio"
         >
-          <Download className="w-4 h-4" aria-hidden="true" />
+          <Download className="w-5 h-5 sm:w-4 sm:h-4" aria-hidden="true" />
+          <span className="sm:hidden text-sm">Download</span>
         </a>
       </div>
     </div>

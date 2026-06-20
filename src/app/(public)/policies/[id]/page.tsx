@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft, Download } from 'lucide-react';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import AudioPlayer from '@/components/policy/AudioPlayer';
+import FeedbackForm from '@/components/feedback/FeedbackForm';
+import FeedbackList from '@/components/feedback/FeedbackList';
 
 interface PolicyPageProps {
   params: Promise<{ id: string }>;
@@ -111,13 +113,27 @@ async function PolicyContent({ id }: { id: string }) {
     .eq('status', 'ready')
     .single();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let userProfile = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id, full_name')
+      .eq('id', user.id)
+      .single();
+    userProfile = profile;
+  }
+
   if (error || !policy) {
     return (
       <div className="text-center py-16">
         <p className="text-text-secondary text-lg mb-4">Policy not found or not yet published.</p>
         <Link
           href="/policies"
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary-dark transition-colors"
+          className="inline-flex items-center justify-center gap-1.5 min-h-11 px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           Back to Policies
@@ -131,12 +147,19 @@ async function PolicyContent({ id }: { id: string }) {
   const categoryName = policy.category?.name ?? null;
   const sections = policy.summary ? parseSummary(policy.summary) : [];
 
+  const { data: feedbackList } = await supabase
+    .from('feedback')
+    .select('id, content, created_at, user:profiles(full_name, email)')
+    .eq('policy_id', id)
+    .eq('status', 'unreviewed')
+    .order('created_at', { ascending: false });
+
   return (
     <>
       {/* Back link */}
       <Link
         href="/policies"
-        className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 min-h-11 px-2 text-sm text-text-secondary hover:text-text-primary transition-colors mb-6 focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
       >
         <ArrowLeft className="w-4 h-4" aria-hidden="true" />
         Back to Policies
@@ -169,11 +192,11 @@ async function PolicyContent({ id }: { id: string }) {
       </div>
 
       {/* Action buttons */}
-      <div className="flex flex-wrap items-center gap-3 mb-8">
+      <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-8">
         <a
           href={policy.document_url}
           download
-          className="inline-flex items-center gap-2 px-4 py-2 border border-border-custom text-sm font-medium text-text-primary rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+          className="inline-flex items-center justify-center gap-2 min-h-11 px-4 py-2 border border-border-custom text-sm font-medium text-text-primary rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
         >
           <Download className="w-4 h-4" aria-hidden="true" />
           Download Original
@@ -181,7 +204,7 @@ async function PolicyContent({ id }: { id: string }) {
         {policy.audio_url && (
           <a
             href="#audio-player"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+            className="inline-flex items-center justify-center gap-2 min-h-11 px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
           >
             Listen to Summary
           </a>
@@ -214,6 +237,20 @@ async function PolicyContent({ id }: { id: string }) {
         Uploaded: {formatLongDate(policy.created_at)}
         {policy.published_at && <> &middot; Published: {formatLongDate(policy.published_at)}</>}
       </p>
+
+      {/* Citizen Feedback Section */}
+      <section className="mt-12" aria-label="Citizen feedback">
+        <h2 className="text-xl font-bold text-text-primary mb-6">Citizen Feedback</h2>
+        <FeedbackForm policyId={id} user={userProfile} />
+      </section>
+
+      {/* Public Feedback List */}
+      {feedbackList && feedbackList.length > 0 && (
+        <section className="mt-12" aria-label="Public feedback list">
+          <h3 className="text-lg font-semibold text-text-primary mb-4">Recent Comments</h3>
+          <FeedbackList policyId={id} />
+        </section>
+      )}
     </>
   );
 }
@@ -222,7 +259,7 @@ export default async function PolicyPage({ params }: PolicyPageProps) {
   const { id } = await params;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-hidden">
       <Suspense
         fallback={
           <div className="space-y-4 animate-pulse">

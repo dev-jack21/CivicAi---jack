@@ -130,7 +130,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-2 -mr-2 text-text-secondary hover:text-text-primary hover:bg-zinc-100 rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="lg:hidden inline-flex items-center justify-center min-h-11 min-w-11 text-text-secondary hover:text-text-primary hover:bg-zinc-100 rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
           aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -168,7 +168,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-1.5 text-text-secondary hover:text-text-primary hover:bg-zinc-100 rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex items-center justify-center min-h-11 min-w-11 text-text-secondary hover:text-text-primary hover:bg-zinc-100 rounded-lg transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />

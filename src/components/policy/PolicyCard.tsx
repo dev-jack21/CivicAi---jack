@@ -79,10 +79,10 @@ export default function PolicyCard({
         </span>
       </div>
 
-      <div className="flex items-center gap-3 pt-3 border-t border-border-custom">
+      <div className="flex items-center gap-3 pt-3 border-t border-border-custom flex-wrap">
         <Link
           href={`/policies/${id}`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+          className="inline-flex items-center gap-1.5 min-h-11 px-2 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
         >
           <FileText className="w-4 h-4" aria-hidden="true" />
           Read Summary
@@ -90,7 +90,7 @@ export default function PolicyCard({
         {audio_url && (
           <Link
             href={`/policies/${id}`}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+            className="inline-flex items-center gap-1.5 min-h-11 px-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
           >
             <Headphones className="w-4 h-4" aria-hidden="true" />
             Listen →

@@ -1,12 +1,7 @@
 import { parsePDF, PDFParseError } from '../src/lib/parsers/pdf';
 import { parseDOCX, DOCXParseError } from '../src/lib/parsers/docx';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
-import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-} from 'docx';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
 
 const PASS = '\x1b[32;1mPASS\x1b[0m';
 const FAIL = '\x1b[31;1mFAIL\x1b[0m';
@@ -73,15 +68,11 @@ async function createImageOnlyPDF(): Promise<Buffer> {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([612, 792]);
   const redPixel = Buffer.from([
-    0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A,
-    0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52,
-    0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-    0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53,
-    0xDE, 0x00, 0x00, 0x00, 0x0C, 0x49, 0x44, 0x41,
-    0x54, 0x08, 0xD7, 0x63, 0xF8, 0xCF, 0xC0, 0x00,
-    0x00, 0x00, 0x03, 0x00, 0x01, 0x36, 0x28, 0x19,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4E,
-    0x44, 0xAE, 0x42, 0x60, 0x82,
+    0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+    0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x02, 0x00, 0x00, 0x00, 0x90, 0x77, 0x53,
+    0xde, 0x00, 0x00, 0x00, 0x0c, 0x49, 0x44, 0x41, 0x54, 0x08, 0xd7, 0x63, 0xf8, 0xcf, 0xc0, 0x00,
+    0x00, 0x00, 0x03, 0x00, 0x01, 0x36, 0x28, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e,
+    0x44, 0xae, 0x42, 0x60, 0x82,
   ]);
   const pngImage = await pdfDoc.embedPng(redPixel);
   page.drawImage(pngImage, { x: 0, y: 0, width: 1, height: 1 });
@@ -94,31 +85,63 @@ async function createDOCXBuffer(): Promise<Buffer> {
       {
         children: [
           new Paragraph({
-            children: [new TextRun("The Data Protection Act, 2019 is Kenya's primary data privacy legislation.")],
+            children: [
+              new TextRun(
+                "The Data Protection Act, 2019 is Kenya's primary data privacy legislation."
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('It establishes the Office of the Data Protection Commissioner and sets rules for processing personal data.')],
+            children: [
+              new TextRun(
+                'It establishes the Office of the Data Protection Commissioner and sets rules for processing personal data.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('Key principles include consent, data minimization, and purpose limitation.')],
+            children: [
+              new TextRun(
+                'Key principles include consent, data minimization, and purpose limitation.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('Public participation under Article 118 of the Constitution requires that Parliament conduct its business openly and involve the public in legislative processes.')],
+            children: [
+              new TextRun(
+                'Public participation under Article 118 of the Constitution requires that Parliament conduct its business openly and involve the public in legislative processes.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('This includes public hearings, submission of memoranda, and stakeholder consultations.')],
+            children: [
+              new TextRun(
+                'This includes public hearings, submission of memoranda, and stakeholder consultations.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('Section 5 outlines the procedures for data breach notification.')],
+            children: [
+              new TextRun('Section 5 outlines the procedures for data breach notification.'),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('Data controllers must notify the Commissioner within 72 hours of becoming aware of a breach.')],
+            children: [
+              new TextRun(
+                'Data controllers must notify the Commissioner within 72 hours of becoming aware of a breach.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('The Act represents a significant step forward for digital rights in Kenya.')],
+            children: [
+              new TextRun(
+                'The Act represents a significant step forward for digital rights in Kenya.'
+              ),
+            ],
           }),
           new Paragraph({
-            children: [new TextRun('Citizens are encouraged to exercise their rights under the Act.')],
+            children: [
+              new TextRun('Citizens are encouraged to exercise their rights under the Act.'),
+            ],
           }),
         ],
       },

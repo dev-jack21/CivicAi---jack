@@ -67,7 +67,7 @@ export function LoginForm() {
           className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 rounded-md text-sm flex items-center gap-2"
           role="alert"
         >
-          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}
@@ -99,7 +99,7 @@ export function LoginForm() {
               className="mt-1.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-1.5"
               role="alert"
             >
-              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               {errors.email.message}
             </p>
           )}
@@ -131,7 +131,7 @@ export function LoginForm() {
               className="mt-1.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-1.5"
               role="alert"
             >
-              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
               {errors.password.message}
             </p>
           )}
@@ -140,7 +140,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2.5 px-4 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:dark:bg-zinc-800 disabled:dark:text-zinc-500 text-white font-medium rounded-md shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] text-sm cursor-pointer disabled:cursor-not-allowed"
+          className="w-full min-h-11 py-2.5 px-4 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:dark:bg-zinc-800 disabled:dark:text-zinc-500 text-white font-medium rounded-md shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] text-sm cursor-pointer disabled:cursor-not-allowed"
         >
           {isLoading ? 'Signing in...' : 'Sign in'}
         </button>
@@ -162,7 +162,7 @@ export function LoginForm() {
           type="button"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="mt-4 w-full py-2 px-4 bg-white dark:bg-zinc-900 border border-[#E5E7EB] dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:bg-zinc-100 disabled:dark:bg-zinc-800 text-[#6B7280] dark:text-zinc-200 font-medium rounded-md shadow-sm transition-all flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer"
+          className="mt-4 w-full min-h-11 py-2 px-4 bg-white dark:bg-zinc-900 border border-[#E5E7EB] dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:bg-zinc-100 disabled:dark:bg-zinc-800 text-[#6B7280] dark:text-zinc-200 font-medium rounded-md shadow-sm transition-all flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer"
         >
           <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
             <path

@@ -132,7 +132,7 @@ export default function AdminPoliciesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-[#E5E7EB] pb-4 flex items-center justify-between">
+      <div className="border-b border-[#E5E7EB] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111827]">
             Manage Policies
@@ -145,7 +145,7 @@ export default function AdminPoliciesPage() {
           type="button"
           onClick={handleRefresh}
           disabled={loading}
-          className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[#6B7280] hover:text-[#111827] border border-[#E5E7EB] rounded-lg hover:bg-zinc-50 transition-colors disabled:opacity-50 cursor-pointer"
+          className="inline-flex items-center justify-center min-h-11 gap-2 px-3 py-2 text-sm font-medium text-[#6B7280] hover:text-[#111827] border border-[#E5E7EB] rounded-lg hover:bg-zinc-50 transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh

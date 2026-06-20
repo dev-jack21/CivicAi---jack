@@ -69,13 +69,17 @@ async function main() {
         console.log(`  ${WARN}  HTTP ${res.status}, trying next...`);
       }
     } catch (err) {
-      console.log(`  ${WARN}  Fetch failed: ${err instanceof Error ? err.message : 'unknown'}, trying next...`);
+      console.log(
+        `  ${WARN}  Fetch failed: ${err instanceof Error ? err.message : 'unknown'}, trying next...`
+      );
     }
   }
 
   if (!pdfBuffer) {
     // Fallback: generate a multi-page synthetic PDF
-    console.log(`  ${WARN}  No external PDF available — generating synthetic 10-page test document`);
+    console.log(
+      `  ${WARN}  No external PDF available — generating synthetic 10-page test document`
+    );
     const { PDFDocument, StandardFonts } = await import('pdf-lib');
     const pdfDoc = await PDFDocument.create();
     const helv = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -84,7 +88,7 @@ async function main() {
       const paragraphs = [
         `Page ${pageNum} — Kenya National Digital Transformation Strategy 2024-2028`,
         '',
-        'The Government of Kenya has developed this comprehensive strategy to guide the country\'s digital transformation agenda over the next five years.',
+        "The Government of Kenya has developed this comprehensive strategy to guide the country's digital transformation agenda over the next five years.",
         'This strategy aligns with Kenya Vision 2030 and the Bottom-Up Economic Transformation Agenda (BETA).',
         '',
         'Pillar 1: Digital Infrastructure',
@@ -158,9 +162,9 @@ async function main() {
   }
   console.log(`  ${PASS}  Uploaded to storage: ${testFilename}`);
 
-  const { data: { publicUrl } } = serviceRole.storage
-    .from('policy-documents')
-    .getPublicUrl(testFilename);
+  const {
+    data: { publicUrl },
+  } = serviceRole.storage.from('policy-documents').getPublicUrl(testFilename);
 
   const { data: policy, error: policyError } = await serviceRole
     .from('policies')
@@ -206,11 +210,15 @@ async function main() {
       console.log(`  ${WARN}  ⚠️  Summarize took ${summarizeDuration}s — exceeds 40s threshold!`);
     }
     if (parseFloat(summarizeDuration) > 55) {
-      console.log(`  ${FAIL}  ❌ Summarize took ${summarizeDuration}s — dangerously close to 60s maxDuration!`);
+      console.log(
+        `  ${FAIL}  ❌ Summarize took ${summarizeDuration}s — dangerously close to 60s maxDuration!`
+      );
     }
   } catch (err) {
     const summarizeDuration = ((Date.now() - summarizeStart) / 1000).toFixed(1);
-    console.log(`  ${FAIL}  Summarize failed after ${summarizeDuration}s: ${err instanceof Error ? err.message : err}`);
+    console.log(
+      `  ${FAIL}  Summarize failed after ${summarizeDuration}s: ${err instanceof Error ? err.message : err}`
+    );
     await cleanup(serviceRole, policy.id, testFilename);
     process.exit(1);
   }
@@ -233,7 +241,9 @@ async function main() {
     }
   } catch (err) {
     const ttsDuration = ((Date.now() - ttsStart) / 1000).toFixed(1);
-    console.log(`  ${FAIL}  TTS failed after ${ttsDuration}s: ${err instanceof Error ? err.message : err}`);
+    console.log(
+      `  ${FAIL}  TTS failed after ${ttsDuration}s: ${err instanceof Error ? err.message : err}`
+    );
     await cleanup(serviceRole, policy.id, testFilename);
     process.exit(1);
   }
@@ -263,9 +273,13 @@ async function main() {
   if (jobs) {
     console.log(`\n${INFO} Processing jobs:`);
     for (const job of jobs) {
-      const duration = job.started_at && job.completed_at
-        ? ((new Date(job.completed_at).getTime() - new Date(job.started_at).getTime()) / 1000).toFixed(1)
-        : 'N/A';
+      const duration =
+        job.started_at && job.completed_at
+          ? (
+              (new Date(job.completed_at).getTime() - new Date(job.started_at).getTime()) /
+              1000
+            ).toFixed(1)
+          : 'N/A';
       console.log(`  ${job.job_type}: status=${job.status}, duration=${duration}s`);
     }
   }
@@ -279,7 +293,11 @@ async function main() {
   console.log('─'.repeat(65));
 }
 
-async function cleanup(serviceRole: ReturnType<typeof createServiceRoleClient>, policyId: string, filename: string) {
+async function cleanup(
+  serviceRole: ReturnType<typeof createServiceRoleClient>,
+  policyId: string,
+  filename: string
+) {
   try {
     await serviceRole.from('processing_jobs').delete().eq('policy_id', policyId);
     await serviceRole.from('policies').delete().eq('id', policyId);

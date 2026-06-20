@@ -235,7 +235,7 @@ export default function AdminUploadPage() {
         </div>
       )}
 
-      <div className="bg-white border border-[#E5E7EB] rounded-xl shadow-sm p-8">
+      <div className="bg-white border border-[#E5E7EB] rounded-xl shadow-sm p-4 sm:p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-[#6B7280] mb-1.5">
@@ -456,10 +456,10 @@ export default function AdminUploadPage() {
             )}
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
             <Link
               href="/admin/policies"
-              className={`py-2 px-4 border border-[#E5E7EB] text-[#6B7280] hover:bg-zinc-50 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:ring-offset-2 ${
+              className={`inline-flex items-center justify-center min-h-11 py-2 px-4 border border-[#E5E7EB] text-[#6B7280] hover:bg-zinc-50 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:ring-offset-2 ${
                 isLoading || !!successId ? 'pointer-events-none opacity-50' : ''
               }`}
             >
@@ -468,7 +468,7 @@ export default function AdminUploadPage() {
             <button
               type="submit"
               disabled={isLoading || !!successId}
-              className="py-2 px-6 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium rounded-md shadow-sm transition-all text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer flex items-center gap-2"
+              className="inline-flex items-center justify-center min-h-11 py-2 px-6 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium rounded-md shadow-sm transition-all text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer gap-2"
             >
               {isLoading ? (
                 <>
