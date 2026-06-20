@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { runSummarizeStub, runTtsStub } from '@/lib/process';
+import { runSummarize } from '@/lib/process';
+
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,9 +41,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const summary = await runSummarizeStub(policy_id);
-
-    runTtsStub(policy_id).catch((err) => console.error('TTS stub failed:', err));
+    const summary = await runSummarize(policy_id);
 
     return NextResponse.json({ message: 'Summarization complete', summary });
   } catch {

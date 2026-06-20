@@ -213,7 +213,7 @@ US-07: As a screen reader user, I want the site to be fully navigable by keyboar
 
 ## 9. Constraints & Assumptions
 
-- OpenAI API costs will be managed by request batching and caching summaries
+- Gemini API costs (free tier: 60 req/min, 1,500 req/day with Gemini 2.0 Flash) will be managed by request batching and caching summaries
 - Supabase free tier used for MVP; scale to paid on launch
 - Team has access to Vercel hobby tier for deployment
 - Internet connectivity in target areas may be 2G/3G — audio files should be compressed

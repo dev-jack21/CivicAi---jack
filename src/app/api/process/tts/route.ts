@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
-import { runTtsStub } from '@/lib/process';
+import { runTts } from '@/lib/process';
+
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,7 +41,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await runTtsStub(policy_id);
+    await runTts(policy_id);
 
     return NextResponse.json({ message: 'TTS generation complete' });
   } catch {

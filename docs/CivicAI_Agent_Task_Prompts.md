@@ -23,10 +23,10 @@ handled entirely through Supabase Auth (see Task 1.1) — leave that route out o
 structure entirely.
 
 Install: @supabase/supabase-js, @supabase/auth-helpers-nextjs, zod, react-hook-form,
-@hookform/resolvers, lucide-react, pdf-parse, mammoth, openai.
+@hookform/resolvers, lucide-react, pdf-parse, mammoth, @google/generative-ai, edge-tts, gtts.
 
 Create an empty .env.local.example listing every variable from section 5 of
-/docs/02_TECH_SPEC.md (Supabase, OpenAI, Google TTS, app URL — omit the NEXTAUTH_* variables
+/docs/02_TECH_SPEC.md (Supabase, Gemini, TTS config, app URL — omit the NEXTAUTH_* variables
 since we are not using NextAuth).
 
 Set up ESLint + Prettier per section 1.4 of the tech spec. Do not write any business
@@ -107,7 +107,7 @@ Connect this repo to a new Vercel project. Set up the three environments describ
 matching branches dev, staging, and main.
 
 Add all environment variables from .env.local.example as Vercel project environment
-variables (use placeholder values for OpenAI and Google TTS keys for now since those
+variables (use a placeholder value for the Gemini key for now since that
 aren't being used yet).
 
 Push to main and confirm the empty shell deploys successfully and is reachable at the
@@ -257,12 +257,12 @@ Done when: an admin can fill out the form, upload a file, and see the new policy
 
 ```
 Read /docs/02_TECH_SPEC.md section 4 (the AI pipeline) and /docs/04_DATABASE.md section 2.5
-(processing_jobs table) — we are NOT calling OpenAI or Google TTS yet in this task,
+(processing_jobs table) — we are NOT calling Gemini or TTS yet in this task,
 just building the scaffolding around it.
 
 After a policy is created (Task 2.2/2.3), insert two rows into processing_jobs
 (job_type 'summarize' and 'tts', both status 'pending'). Build a stub version of
-POST /api/process/summarize that, instead of calling OpenAI, waits 2 seconds and
+POST /api/process/summarize that, instead of calling Gemini, waits 2 seconds and
 writes a hardcoded placeholder summary to the policy row, updates the summarize job
 to 'done', and updates policy status to 'processing' → triggers the stub
 /api/process/tts the same way, which writes a hardcoded placeholder audio_url and
@@ -302,53 +302,28 @@ Done when: both parsers return real extracted text from real files, and a near-e
 
 ---
 
-### Task 3.2 — OpenAI summarization
+### Task 3.2 — Gemini summarization (already implemented)
 
 ```
-Read /docs/02_TECH_SPEC.md section 4.1 (the exact summarization prompt) and section 1.2
-(model: GPT-4o, fallback GPT-3.5-turbo per /docs/03_ARCHITECTURE.md section 6).
+Already done. Uses Gemini 2.0 Flash via @google/generative-ai.
+See /src/lib/ai/summarize.ts — chunks at 4000 tokens, merges multi-chunk summaries,
+throws on empty input. API key: GEMINI_API_KEY in .env.local.
 
-Build lib/ai/summarize.ts using the OpenAI SDK with the exact system prompt from
-/docs/02_TECH_SPEC.md section 4.1. Chunk extracted text at 4000 tokens as specified, and if
-multiple chunks are needed, summarize each chunk then do a final pass that merges
-them into the same three-section format (Key Points / What This Means for You / Next
-Steps) rather than just concatenating chunk summaries.
-
-Replace the stub from Task 2.4: POST /api/process/summarize should now call this
-real function, write the real summary to the policy row, and update job status. Set
-export const maxDuration = 60 on this route explicitly. If the call fails, write the
-error to processing_jobs.error_message and set policy status to 'failed', matching
-the PROCESSING_FAILED error code from /docs/02_TECH_SPEC.md section 6.
-
-Add a soft limit: if extracted text exceeds roughly 40,000 tokens (10 chunks), return
-a clear "document too long for MVP processing" error rather than attempting a chain
-of API calls that risks exceeding the 60-second function limit.
+If re-running: verify GEMINI_API_KEY is set in .env.local first.
 ```
-
-Done when: uploading a real policy PDF produces a real three-section AI summary in the correct format, with failures captured cleanly in processing_jobs and a sensible length cap in place.
 
 ---
 
-### Task 3.3 — Text-to-speech
+### Task 3.3 — Text-to-speech (already implemented)
 
 ```
-Read /docs/02_TECH_SPEC.md section 4.2 (TTS config: Google Cloud TTS, en-KE-Standard-A
-voice, MP3 64kbps, 1500 word max) and /docs/03_ARCHITECTURE.md section 6 (ElevenLabs as
-fallback).
+Already done. See /src/lib/ai/tts.ts — primary engine is edge-tts (Kenyan English voice
+en-KE-AsiliaNeural), fallback is gTTS (no API key). Falls through both engines before
+throwing. Configurable via TTS_PRIMARY_ENGINE env var.
 
-Build lib/ai/tts.ts that takes the summary text, truncates to 1500 words if needed
-(truncate at the nearest section boundary, not mid-sentence — better to drop the
-"Next Steps" section than cut a sentence in half), and generates MP3 audio at 64kbps
-using the specified voice. Upload the resulting MP3 to the policy-audio bucket and
-return its public URL.
-
-Replace the stub from Task 2.4: POST /api/process/tts should call this real function
-after summarize completes, write the real audio_url, update processing_jobs, and set
-policy status to 'ready'. Set export const maxDuration = 60 on this route too. On
-failure, same error handling pattern as Task 3.2.
+The API route integration (POST /api/process/tts calling this, uploading to Supabase,
+updating processing_jobs) still needs to be wired up — this task built the library layer only.
 ```
-
-Done when: a real policy produces real downloadable/playable MP3 audio at the correct bitrate and voice, with the same failure-handling guarantees as the summarization step.
 
 ---
 
@@ -359,8 +334,8 @@ This is a verification task, not a build task — read /docs/03_ARCHITECTURE.md 
 (upload flow) and confirm the current implementation matches it.
 
 Trace through the full chain: admin uploads → policy created (pending) →
-/api/process/summarize runs (maxDuration 60, real OpenAI call) → on success, server-side
-triggers /api/process/tts (maxDuration 60, real Google TTS call) → policy status
+/api/process/summarize runs (maxDuration 60, real Gemini call) → on success, server-side
+triggers /api/process/tts (maxDuration 60, real edge-tts/gTTS call) → policy status
 becomes 'ready'. Confirm these are two genuinely separate function invocations, not
 one function that calls both inline — if they're combined into a single route
 handler, split them, because a combined call risks exceeding even the 60s Hobby
@@ -616,4 +591,4 @@ Done when: production is live and every NFR from the PRD has either been verifie
 
 ## Quick reference — task order and rough effort
 
-Phase 0 (foundation) and Phase 1 (auth) are sequential and should be done by one person before the team splits up, since everything else depends on them. From Phase 2 onward, the document-upload track (2.x → 3.x) and the public-UI track (4.x) can run in parallel once Task 2.4's stub pipeline is in place — that stub is what lets the public-UI person build against realistic-looking data without waiting on real OpenAI/Google TTS integration. Phase 5 (feedback) only needs Phase 1 (auth) and the policy detail page from 4.2, so it can also start early if someone's free. Phase 6 should be a final pass done by the whole team together rather than delegated to one person, since it touches every part of the app.
+Phase 0 (foundation) and Phase 1 (auth) are sequential and should be done by one person before the team splits up, since everything else depends on them. From Phase 2 onward, the document-upload track (2.x → 3.x) and the public-UI track (4.x) can run in parallel once Task 2.4's stub pipeline is in place — that stub is what lets the public-UI person build against realistic-looking data without waiting on real Gemini/TTS integration. Phase 5 (feedback) only needs Phase 1 (auth) and the policy detail page from 4.2, so it can also start early if someone's free. Phase 6 should be a final pass done by the whole team together rather than delegated to one person, since it touches every part of the app.

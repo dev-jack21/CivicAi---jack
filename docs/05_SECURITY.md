@@ -159,14 +159,14 @@ function validateUpload(file: File): { valid: boolean; error?: string } {
 | Policy documents | Supabase Storage | ✅ at rest |
 | Audio files | Supabase Storage (public) | ✅ at rest (public access) |
 | AI summary text | PostgreSQL | ✅ at rest |
-| OpenAI API key | Env variable (server only) | ✅ never exposed to client |
+| Gemini API key | Env variable (server only) | ✅ never exposed to client |
 
 ### 4.2 Environment Variables Security
 
 - All API keys stored in Vercel environment variables (encrypted at rest)
 - `NEXT_PUBLIC_` prefix only used for keys that are safe to expose (Supabase anon key)
 - `SUPABASE_SERVICE_ROLE_KEY` — server only, never in client bundle
-- `OPENAI_API_KEY` — server only, never in client bundle
+- `GEMINI_API_KEY` — server only, never in client bundle
 - Env vars never committed to GitHub (`.env.local` in `.gitignore`)
 
 ---
@@ -264,7 +264,7 @@ CivicAI complies with the **Kenya Data Protection Act 2019** (KDPA):
 ### Privacy Policy Must Include
 - What data is collected (email, feedback)
 - How it is used (civic participation, no ad targeting)
-- Who it is shared with (no third parties except OpenAI for summarization, anonymized)
+- Who it is shared with (no third parties except Google Gemini for summarization, anonymized; TTS via edge-tts/gTTS — no API keys needed)
 - How to request deletion
 
 ---

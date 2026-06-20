@@ -37,11 +37,11 @@ CivicAI uses a **monolithic Next.js architecture** deployed on Vercel, with Supa
 ┌─────────────────────────┐    ┌─────────────────────────────────┐
 │   SUPABASE (BaaS)        │    │       EXTERNAL AI SERVICES       │
 │   ┌───────────────────┐ │    │   ┌─────────────────────────┐   │
-│   │  PostgreSQL DB     │ │    │   │  OpenAI API (GPT-4o)    │   │
+│   │  PostgreSQL DB     │ │    │   │  Gemini API (2.0 Flash)│   │
 │   │  • policies        │ │    │   │  • Document summarize   │   │
 │   │  • users           │ │    │   └─────────────────────────┘   │
 │   │  • feedback        │ │    │   ┌─────────────────────────┐   │
-│   │  • processing_jobs │ │    │   │  Google Cloud TTS       │   │
+│   │  • processing_jobs │ │    │   │  edge-tts / gTTS        │   │
 │   └───────────────────┘ │    │   │  • Audio generation     │   │
 │   ┌───────────────────┐ │    │   └─────────────────────────┘   │
 │   │  Supabase Auth     │ │    └─────────────────────────────────┘
@@ -83,8 +83,8 @@ Triggered asynchronously after document upload:
 ```
 1. File upload → Supabase Storage → URL returned
 2. Background job → extract text (pdf-parse / mammoth)
-3. Text chunked → OpenAI API → plain-English summary
-4. Summary → Google TTS → MP3 audio
+3. Text chunked → Gemini Flash → plain-English summary
+4. Summary → edge-tts (or gTTS fallback) → MP3 audio
 5. URLs + summary → saved to PostgreSQL
 6. Status updated → "ready"
 ```
@@ -110,11 +110,11 @@ Admin → Upload Form
      → Insert policy row (status: "processing")
      → Trigger /api/process/summarize
           → Extract text from file
-          → Send to OpenAI
-          → Receive summary
-          → Trigger /api/process/tts
-               → Send summary to Google TTS
-               → Save MP3 to Supabase Storage
+           → Send to Gemini
+           → Receive summary
+           → Trigger /api/process/tts
+                → Send summary to edge-tts (or gTTS fallback)
+                → Save MP3 to Supabase Storage
           → Update policy row (status: "ready", summary, audio_url)
      → Admin sees "Ready" status in dashboard
 ```
@@ -151,7 +151,7 @@ Vercel Production (civicai.vercel.app)
        └── API Routes (Vercel Serverless Functions)
                 │
                 ├── Supabase (ap-southeast-1 / closest African region)
-                └── OpenAI API / Google Cloud APIs
+                └── Gemini API / edge-tts
 ```
 
 ### Environment Strategy
@@ -181,8 +181,8 @@ Vercel Production (civicai.vercel.app)
 
 | Service | Purpose | Fallback |
 |---|---|---|
-| OpenAI GPT-4o | Policy summarization | GPT-3.5-turbo (cheaper) |
-| Google Cloud TTS | Audio generation | ElevenLabs, or browser Web Speech API |
+| Gemini 2.0 Flash | Policy summarization | gpt-4o-mini (if needed) |
+| edge-tts / gTTS | Audio generation | Web Speech API (browser fallback) |
 | Supabase | Auth + DB + Storage | N/A (core dependency) |
 | Vercel | Hosting + CDN | N/A for MVP |
 | Google OAuth | Social login | Email/password only |

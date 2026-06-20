@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { policyUploadSchema } from '@/lib/validators/policy';
 
 export async function GET(request: NextRequest) {
@@ -8,18 +8,40 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '10', 10)));
+    const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '12', 10)));
     const offset = (page - 1) * limit;
+
+    const search = searchParams.get('search')?.trim() || '';
+    const categorySlug = searchParams.get('category')?.trim() || '';
+    const ministry = searchParams.get('ministry')?.trim() || '';
+
+    let query = supabase
+      .from('policies')
+      .select('*, category:categories!inner(id, name, slug), feedback_count:feedback(count)', {
+        count: 'exact',
+      })
+      .not('published_at', 'is', null)
+      .eq('status', 'ready');
+
+    if (search) {
+      query = query.or(
+        `title.ilike.%${search}%,description.ilike.%${search}%,summary.ilike.%${search}%`
+      );
+    }
+
+    if (categorySlug) {
+      query = query.eq('category.slug', categorySlug);
+    }
+
+    if (ministry) {
+      query = query.eq('ministry', ministry);
+    }
 
     const {
       data: policies,
       error,
       count,
-    } = await supabase
-      .from('policies')
-      .select('*, category:categories(name), feedback_count:feedback(count)', { count: 'exact' })
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1);
+    } = await query.order('created_at', { ascending: false }).range(offset, offset + limit - 1);
 
     if (error) {
       return NextResponse.json(
@@ -41,9 +63,24 @@ export async function GET(request: NextRequest) {
       audio_url: p.audio_url,
       document_url: p.document_url,
       status: p.status,
+      published_at: p.published_at,
       created_at: p.created_at,
       feedback_count: p.feedback_count?.[0]?.count ?? 0,
     }));
+
+    const { data: categories } = await supabase
+      .from('categories')
+      .select('id, name, slug')
+      .order('name');
+
+    const { data: ministriesData } = await supabase
+      .from('policies')
+      .select('ministry')
+      .not('published_at', 'is', null)
+      .eq('status', 'ready')
+      .order('ministry');
+
+    const ministries = [...new Set(ministriesData?.map((m) => m.ministry).filter(Boolean) ?? [])];
 
     return NextResponse.json({
       policies: mapped,
@@ -51,6 +88,8 @@ export async function GET(request: NextRequest) {
       page,
       limit,
       total_pages: totalPages,
+      categories: categories ?? [],
+      ministries,
     });
   } catch {
     return NextResponse.json(
@@ -145,6 +184,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const { createServiceRoleClient } = await import('@/lib/supabase/server');
     const serviceRole = createServiceRoleClient();
     const { error: jobsError } = await serviceRole.from('processing_jobs').insert([
       { policy_id: policy.id, job_type: 'summarize', status: 'pending' },

@@ -2,12 +2,13 @@ export interface Policy {
   id: string;
   title: string;
   ministry: string;
-  category: string;
+  category: string | null;
   description: string;
   summary: string | null;
   audio_url: string | null;
   document_url: string;
   status: 'pending' | 'processing' | 'ready' | 'failed';
+  published_at: string | null;
   created_at: string;
   feedback_count: number;
 }
@@ -18,6 +19,14 @@ export interface PolicyListResponse {
   page: number;
   limit: number;
   total_pages: number;
+  categories?: Category[];
+  ministries?: string[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
 }
 
 export interface Feedback {

@@ -182,7 +182,19 @@ export default function AdminUploadPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ policy_id: policyResult.id }),
-      }).catch((err) => console.error('Failed to trigger summarization:', err));
+      })
+        .then((res) => {
+          if (!res.ok) {
+            console.error('Summarization failed:', res.status);
+            return;
+          }
+          fetch('/api/process/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ policy_id: policyResult.id }),
+          }).catch((err) => console.error('Failed to trigger TTS:', err));
+        })
+        .catch((err) => console.error('Failed to trigger summarization:', err));
 
       setTimeout(() => router.push('/admin/policies'), 2000);
     } catch {

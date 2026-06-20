@@ -107,7 +107,7 @@ civicai/
 │   │   ├── client.ts              # Browser client
 │   │   └── server.ts              # Server client
 │   ├── ai/
-│   │   ├── summarize.ts           # OpenAI summarization
+│   │   ├── summarize.ts           # Gemini summarization
 │   │   └── tts.ts                 # Text-to-speech
 │   ├── parsers/
 │   │   ├── pdf.ts                 # pdf-parse wrapper
@@ -209,7 +209,7 @@ Response 200:
 ## 4. AI Processing Pipeline
 
 ```
-Upload → Extract Text → Chunk Text → Summarize (OpenAI) → Store Summary
+Upload → Extract Text → Chunk Text → Summarize (Gemini) → Store Summary
                                                     ↓
                                          Generate Audio (TTS)
                                                     ↓
