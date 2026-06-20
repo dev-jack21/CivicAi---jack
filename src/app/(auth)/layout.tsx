@@ -16,8 +16,9 @@ export default function AuthLayout({
         <div className="absolute top-[-20%] left-[-20%] w-[80%] h-[80%] rounded-full bg-blue-400/20 blur-[100px] pointer-events-none" />
 
         {/* Top Header/Logo */}
-        <div className="flex items-center gap-3 z-10">
-          <span className="text-xl font-bold tracking-tight">CivicAI</span>
+        <div className="z-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/civicai-logo-white-on-blue.png" alt="CivicAI" className="h-24 w-auto" />
         </div>
 
         {/* Center Vision & How It Works */}

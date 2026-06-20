@@ -177,6 +177,13 @@ export default function AdminUploadPage() {
       }
 
       setSuccessId(policyResult.id);
+
+      fetch('/api/process/summarize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ policy_id: policyResult.id }),
+      }).catch((err) => console.error('Failed to trigger summarization:', err));
+
       setTimeout(() => router.push('/admin/policies'), 2000);
     } catch {
       setError('An unexpected error occurred. Please try again.');

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server';
 import { policyUploadSchema } from '@/lib/validators/policy';
 
 export async function GET(request: NextRequest) {
@@ -143,6 +143,16 @@ export async function POST(request: NextRequest) {
         { error: { code: 'INTERNAL_ERROR', message: 'Failed to create policy', status: 500 } },
         { status: 500 }
       );
+    }
+
+    const serviceRole = createServiceRoleClient();
+    const { error: jobsError } = await serviceRole.from('processing_jobs').insert([
+      { policy_id: policy.id, job_type: 'summarize', status: 'pending' },
+      { policy_id: policy.id, job_type: 'tts', status: 'pending' },
+    ]);
+
+    if (jobsError) {
+      console.error('Failed to insert processing jobs:', jobsError);
     }
 
     return NextResponse.json(policy, { status: 201 });

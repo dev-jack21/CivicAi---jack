@@ -117,14 +117,8 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
           href="/admin"
           className="flex items-center gap-2.5 font-bold text-xl tracking-tight text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
         >
-          {/* Logo with Kenya Flag Stripes */}
-          <div className="flex flex-col w-6 h-5 justify-between">
-            <span className="h-[25%] bg-black rounded-t-sm" />
-            <span className="h-[15%] bg-white" />
-            <span className="h-[25%] bg-[#DC2626]" />
-            <span className="h-[15%] bg-white" />
-            <span className="h-[25%] bg-[#078930] rounded-b-sm" />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="CivicAI" className="h-10 w-auto" />
           <span>
             Civic<span className="text-text-primary">AI</span>
             <span className="text-xs font-semibold bg-primary/10 text-primary px-1.5 py-0.5 rounded ml-1.5 align-middle">
@@ -162,13 +156,8 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
       >
         <div className="p-4 border-b border-border-custom flex items-center justify-between">
           <div className="flex items-center gap-2.5 font-bold text-xl tracking-tight text-primary">
-            <div className="flex flex-col w-6 h-5 justify-between">
-              <span className="h-[25%] bg-black rounded-t-sm" />
-              <span className="h-[15%] bg-white" />
-              <span className="h-[25%] bg-[#DC2626]" />
-              <span className="h-[15%] bg-white" />
-              <span className="h-[25%] bg-[#078930] rounded-b-sm" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="CivicAI" className="h-10 w-auto" />
             <span>
               Civic<span className="text-text-primary">AI</span>
               <span className="text-xs font-semibold bg-primary/10 text-primary px-1.5 py-0.5 rounded ml-1.5">
@@ -256,13 +245,8 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
             href="/admin"
             className="flex items-center gap-2.5 font-bold text-xl tracking-tight text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-md"
           >
-            <div className="flex flex-col w-6 h-5 justify-between">
-              <span className="h-[25%] bg-black rounded-t-sm" />
-              <span className="h-[15%] bg-white" />
-              <span className="h-[25%] bg-[#DC2626]" />
-              <span className="h-[15%] bg-white" />
-              <span className="h-[25%] bg-[#078930] rounded-b-sm" />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="CivicAI" className="h-10 w-auto" />
             <span>
               Civic<span className="text-text-primary">AI</span>
               <span className="text-xs font-semibold bg-primary/10 text-primary px-1.5 py-0.5 rounded ml-1.5 align-middle">

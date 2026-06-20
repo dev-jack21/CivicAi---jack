@@ -36,3 +36,14 @@ export interface User {
   role: 'user' | 'admin';
   created_at: string;
 }
+
+export interface ProcessingJob {
+  id: string;
+  policy_id: string;
+  job_type: 'summarize' | 'tts';
+  status: 'pending' | 'running' | 'done' | 'failed';
+  error_message: string | null;
+  started_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+}

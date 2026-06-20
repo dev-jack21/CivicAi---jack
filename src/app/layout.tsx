@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'CivicAI — AI-Powered Accessible Public Participation Portal',
   description:
-    'Understand Kenya\'s policies. Make your voice heard. CivicAI simplifies government documents using AI.',
+    "Understand Kenya's policies. Make your voice heard. CivicAI simplifies government documents using AI.",
+  icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
 
 export default function RootLayout({
