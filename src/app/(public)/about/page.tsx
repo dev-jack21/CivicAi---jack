@@ -31,14 +31,6 @@ export default function AboutPage() {
             helping their voices be heard in civic matters.
           </li>
         </ul>
-
-        <h2 className="text-lg font-semibold text-[#111827] mt-8 mb-2">Academic Context</h2>
-        <p>
-          CivicAI was built as a capstone project for the course <strong>INTE 324</strong> at{' '}
-          <strong>Kabarak University</strong>, Class of 2026. The platform stands as a demonstration
-          of applying advanced web architecture, AI pipelines, and strict WCAG accessibility
-          guidelines to real-world civic challenges.
-        </p>
       </div>
     </div>
   );

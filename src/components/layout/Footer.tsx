@@ -42,7 +42,7 @@ export default function Footer() {
             </Link>
           </div>
           <div className="text-[11px] text-text-muted">
-            Built for INTE 324 | Kabarak University 2026
+            &copy; 2026 CivicAI. All rights reserved.
           </div>
         </div>
       </div>

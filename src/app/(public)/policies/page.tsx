@@ -9,6 +9,8 @@ interface PoliciesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+import { createServerSupabaseClient } from '@/lib/supabase/server';
+
 async function getPolicies({
   search,
   category,
@@ -20,22 +22,87 @@ async function getPolicies({
   ministry: string;
   page: string;
 }) {
-  const params = new URLSearchParams();
-  if (search) params.set('search', search);
-  if (category) params.set('category', category);
-  if (ministry) params.set('ministry', ministry);
-  params.set('page', page);
+  const supabase = await createServerSupabaseClient();
+  const pageNum = Math.max(1, parseInt(page || '1', 10));
+  const limit = 12;
+  const offset = (pageNum - 1) * limit;
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/policies?${params.toString()}`, {
-    next: { revalidate: 60 },
-  });
+  let query = supabase
+    .from('policies')
+    .select(
+      category
+        ? '*, category:categories!inner(id, name, slug), feedback_count:feedback(count)'
+        : '*, category:categories(id, name, slug), feedback_count:feedback(count)',
+      { count: 'exact' }
+    )
+    .not('published_at', 'is', null)
+    .eq('status', 'ready');
 
-  if (!res.ok) {
+  if (search) {
+    query = query.or(
+      `title.ilike.%${search}%,description.ilike.%${search}%,summary.ilike.%${search}%`
+    );
+  }
+
+  if (category) {
+    query = query.eq('category.slug', category);
+  }
+
+  if (ministry) {
+    query = query.eq('ministry', ministry);
+  }
+
+  const {
+    data: policies,
+    error,
+    count,
+  } = await query.order('created_at', { ascending: false }).range(offset, offset + limit - 1);
+
+  if (error) {
     throw new Error('Failed to fetch policies');
   }
 
-  return res.json() as Promise<import('@/types').PolicyListResponse>;
+  const total = count ?? 0;
+  const totalPages = Math.ceil(total / limit);
+
+  const mapped = (policies || []).map((p) => ({
+    id: p.id,
+    title: p.title,
+    ministry: p.ministry,
+    category: p.category?.name ?? null,
+    description: p.description ?? '',
+    summary: p.summary,
+    audio_url: p.audio_url,
+    document_url: p.document_url,
+    status: p.status,
+    published_at: p.published_at,
+    created_at: p.created_at,
+    feedback_count: p.feedback_count?.[0]?.count ?? 0,
+  }));
+
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('id, name, slug')
+    .order('name');
+
+  const { data: ministriesData } = await supabase
+    .from('policies')
+    .select('ministry')
+    .not('published_at', 'is', null)
+    .eq('status', 'ready')
+    .order('ministry');
+
+  const ministries = [...new Set(ministriesData?.map((m) => m.ministry).filter(Boolean) ?? [])];
+
+  return {
+    policies: mapped,
+    total,
+    page: pageNum,
+    limit,
+    total_pages: totalPages,
+    categories: categories ?? [],
+    ministries,
+  };
 }
 
 function SearchForm({

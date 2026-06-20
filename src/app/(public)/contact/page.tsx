@@ -29,11 +29,9 @@ export default function ContactPage() {
 
         <h2 className="text-lg font-semibold text-[#111827] mt-8 mb-2">Location</h2>
         <p>
-          Kabarak University, Main Campus
+          Nairobi, Kenya
           <br />
-          Private Bag - 20104, Kabarak, Kenya
-          <br />
-          School of Science, Engineering & Technology
+          CivicAI Project Secretariat
         </p>
       </div>
     </div>
