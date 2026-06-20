@@ -1,25 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { verifyAdmin } from '@/lib/auth/admin';
 
 export async function GET(request: NextRequest) {
-  const supabase = await createServerSupabaseClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
-  }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.role !== 'admin') {
-    return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
+  const { authorized, errorResponse, supabase } = await verifyAdmin();
+  if (!authorized) {
+    return errorResponse!;
   }
 
   const { searchParams } = new URL(request.url);

@@ -20,12 +20,38 @@ CREATE POLICY "documents: admin upload"
     )
   );
 
--- Authenticated users can read documents
+-- Authenticated users can read documents only if they are admins or if the document is published
 CREATE POLICY "documents: authenticated read"
   ON storage.objects FOR SELECT
-  USING (bucket_id = 'policy-documents' AND auth.role() = 'authenticated');
+  USING (
+    bucket_id = 'policy-documents' AND (
+      EXISTS (
+        SELECT 1 FROM public.profiles
+        WHERE id = auth.uid() AND role = 'admin'
+      ) OR
+      EXISTS (
+        SELECT 1 FROM public.policies p
+        WHERE p.document_url LIKE '%' || name
+        AND p.status = 'ready'
+        AND p.published_at IS NOT NULL
+      )
+    )
+  );
 
--- Audio is public
+-- Audio is public only if it is published or if the user is an admin
 CREATE POLICY "audio: public read"
   ON storage.objects FOR SELECT
-  USING (bucket_id = 'policy-audio');
+  USING (
+    bucket_id = 'policy-audio' AND (
+      EXISTS (
+        SELECT 1 FROM public.profiles
+        WHERE id = auth.uid() AND role = 'admin'
+      ) OR
+      EXISTS (
+        SELECT 1 FROM public.policies p
+        WHERE p.audio_url LIKE '%' || name
+        AND p.status = 'ready'
+        AND p.published_at IS NOT NULL
+      )
+    )
+  );

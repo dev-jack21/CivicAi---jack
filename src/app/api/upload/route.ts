@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { verifyAdmin } from '@/lib/auth/admin';
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -10,43 +10,10 @@ const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. Auth check
-    const supabase = await createServerSupabaseClient();
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (!session) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'No active session found.',
-            status: 401,
-          },
-        },
-        { status: 401 }
-      );
-    }
-
-    // 2. Admin role check
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', session.user.id)
-      .single();
-
-    if (!profile || profile.role !== 'admin') {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Admin access required.',
-            status: 401,
-          },
-        },
-        { status: 401 }
-      );
+    // 1. Auth & Admin check
+    const { authorized, errorResponse, supabase } = await verifyAdmin();
+    if (!authorized) {
+      return errorResponse!;
     }
 
     // 3. Parse request body

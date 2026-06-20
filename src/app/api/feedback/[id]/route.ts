@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { verifyAdmin } from '@/lib/auth/admin';
 
 const routeParamsSchema = z.object({
   id: z.string().uuid(),
@@ -14,25 +14,11 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: 'Invalid feedback ID' }, { status: 400 });
   }
 
-  const supabase = await createServerSupabaseClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+  const { authorized, errorResponse, supabase, session } = await verifyAdmin();
+  if (!authorized || !session) {
+    return errorResponse!;
   }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.role !== 'admin') {
-    return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
-  }
+  const user = session.user;
 
   let body: unknown;
   try {

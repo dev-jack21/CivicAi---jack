@@ -35,6 +35,35 @@ interface Category {
   slug: string;
 }
 
+const getMinistryForCategory = (categoryName: string) => {
+  const name = categoryName.trim();
+  const lower = name.toLowerCase();
+  if (lower === 'treasury' || lower === 'finance') {
+    return 'The National Treasury';
+  }
+  if (lower === 'justice' || lower === 'law') {
+    return 'Office of the Attorney General';
+  }
+  return `Ministry of ${name}`;
+};
+
+const getCategoryForMinistry = (ministryName: string, categoriesList: Category[]) => {
+  const name = ministryName.trim().toLowerCase();
+  if (name === 'the national treasury') {
+    return categoriesList.find(
+      (c) => c.name.toLowerCase() === 'treasury' || c.name.toLowerCase() === 'finance'
+    );
+  }
+  if (name === 'office of the attorney general') {
+    return categoriesList.find(
+      (c) => c.name.toLowerCase() === 'justice' || c.name.toLowerCase() === 'law'
+    );
+  }
+  return categoriesList.find(
+    (c) => `Ministry of ${c.name}`.toLowerCase() === name || c.name.toLowerCase() === name
+  );
+};
+
 export default function AdminUploadPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -83,7 +112,7 @@ export default function AdminUploadPage() {
 
   useEffect(() => {
     if (isSyncing.current || !ministryVal || categories.length === 0) return;
-    const cat = categories.find((c) => `Ministry of ${c.name}` === ministryVal);
+    const cat = getCategoryForMinistry(ministryVal, categories);
     if (cat) {
       isSyncing.current = true;
       setValue('category_id', String(cat.id));
@@ -96,7 +125,7 @@ export default function AdminUploadPage() {
     const cat = categories.find((c) => String(c.id) === categoryIdVal);
     if (cat) {
       isSyncing.current = true;
-      setValue('ministry', `Ministry of ${cat.name}`);
+      setValue('ministry', getMinistryForCategory(cat.name));
       isSyncing.current = false;
     }
   }, [categoryIdVal, categories, setValue]);
@@ -263,8 +292,8 @@ export default function AdminUploadPage() {
               >
                 <option value="">Select ministry...</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={`Ministry of ${cat.name}`}>
-                    Ministry of {cat.name}
+                  <option key={cat.id} value={getMinistryForCategory(cat.name)}>
+                    {getMinistryForCategory(cat.name)}
                   </option>
                 ))}
               </select>
