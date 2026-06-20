@@ -1,14 +1,14 @@
 export default function AccessibilityPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-[#111827] mb-6">
+      <h1 className="text-3xl font-bold tracking-tight text-text-primary mb-6">
         Accessibility Statement
       </h1>
-      <p className="text-sm text-[#6B7280] mb-8">Last updated: June 2026</p>
+      <p className="text-sm text-text-secondary mb-8">Last updated: June 2026</p>
 
-      <div className="space-y-8 text-sm text-[#374151] leading-relaxed">
+      <div className="space-y-8 text-sm text-text-primary leading-relaxed">
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">1. Our Commitment</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">1. Our Commitment</h2>
           <p>
             CivicAI is built on the principle of &quot;Access First.&quot; We believe that
             government policies should be understandable and accessible to all citizens, including
@@ -19,7 +19,9 @@ export default function AccessibilityPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">2. Accessibility Features</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
+            2. Accessibility Features
+          </h2>
           <p>
             The platform includes several features designed to improve accessibility for all users:
           </p>
@@ -47,35 +49,35 @@ export default function AccessibilityPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
             3. Audio Player Keyboard Shortcuts
           </h2>
           <p>
             When using the policy audio player, you can control playback entirely from your
             keyboard:
           </p>
-          <table className="min-w-full divide-y divide-[#E5E7EB] mt-4 border border-[#E5E7EB] rounded-lg overflow-hidden">
-            <thead className="bg-zinc-50">
+          <table className="min-w-full divide-y divide-border-custom mt-4 border border-border-custom rounded-lg overflow-hidden">
+            <thead className="bg-bg-base">
               <tr>
-                <th className="px-4 py-2 text-left font-semibold text-[#111827]">Key</th>
-                <th className="px-4 py-2 text-left font-semibold text-[#111827]">Action</th>
+                <th className="px-4 py-2 text-left font-semibold text-text-primary">Key</th>
+                <th className="px-4 py-2 text-left font-semibold text-text-primary">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E7EB]">
+            <tbody className="divide-y divide-border-custom">
               <tr>
-                <td className="px-4 py-2 font-mono bg-zinc-50 font-bold">Spacebar</td>
+                <td className="px-4 py-2 font-mono bg-bg-base font-bold">Spacebar</td>
                 <td className="px-4 py-2">Play / Pause</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 font-mono bg-zinc-50 font-bold">Left / Right Arrows</td>
+                <td className="px-4 py-2 font-mono bg-bg-base font-bold">Left / Right Arrows</td>
                 <td className="px-4 py-2">Seek backward / forward 5 seconds</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 font-mono bg-zinc-50 font-bold">Up / Down Arrows</td>
+                <td className="px-4 py-2 font-mono bg-bg-base font-bold">Up / Down Arrows</td>
                 <td className="px-4 py-2">Increase / Decrease volume</td>
               </tr>
               <tr>
-                <td className="px-4 py-2 font-mono bg-zinc-50 font-bold">M</td>
+                <td className="px-4 py-2 font-mono bg-bg-base font-bold">M</td>
                 <td className="px-4 py-2">Mute / Unmute</td>
               </tr>
             </tbody>
@@ -83,7 +85,7 @@ export default function AccessibilityPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">4. Feedback & Contact</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">4. Feedback & Contact</h2>
           <p>
             If you encounter any accessibility barriers on CivicAI, or if you have suggestions for
             improvement, please contact us. We are continuously working to enhance the platform

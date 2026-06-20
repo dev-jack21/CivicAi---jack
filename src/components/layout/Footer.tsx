@@ -2,10 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer
-      className="px-4 sm:px-6 lg:px-8 py-10 bg-white border-t border-border-custom overflow-x-hidden"
-      role="contentinfo"
-    >
+    <footer className="px-4 sm:px-6 lg:px-8 py-10 bg-surface overflow-x-hidden" role="contentinfo">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="max-w-md">
           <h2 className="text-base font-bold text-text-primary mb-2">About CivicAI</h2>

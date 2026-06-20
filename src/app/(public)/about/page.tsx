@@ -1,9 +1,9 @@
 export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-[#111827] mb-6">About CivicAI</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-text-primary mb-6">About CivicAI</h1>
 
-      <div className="space-y-6 text-sm text-[#374151] leading-relaxed">
+      <div className="space-y-6 text-sm text-text-primary leading-relaxed">
         <p>
           <strong>CivicAI</strong> is a citizen-centered platform designed to bridge the gap between
           complex government policy documents and the general public in Kenya. Large policy papers,
@@ -17,7 +17,7 @@ export default function AboutPage() {
           deadlines, and provide natural audio narrations so users can listen on the go.
         </p>
 
-        <h2 className="text-lg font-semibold text-[#111827] mt-8 mb-2">Our Key Objectives</h2>
+        <h2 className="text-lg font-semibold text-text-primary mt-8 mb-2">Our Key Objectives</h2>
         <ul className="list-disc pl-5 space-y-2">
           <li>
             <strong>Simplify:</strong> Break down complex frameworks into clear summaries.

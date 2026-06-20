@@ -160,12 +160,12 @@ export default function AdminPoliciesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-[#E5E7EB] pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111827]">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary">
             Manage Policies
           </h1>
-          <p className="mt-1 text-sm text-[#6B7280]">
+          <p className="mt-1 text-sm text-text-secondary">
             View processing status and manage uploaded policy documents.
           </p>
         </div>
@@ -173,7 +173,7 @@ export default function AdminPoliciesPage() {
           type="button"
           onClick={handleRefresh}
           disabled={loading}
-          className="inline-flex items-center justify-center min-h-11 gap-2 px-3 py-2 text-sm font-medium text-[#6B7280] hover:text-[#111827] border border-[#E5E7EB] rounded-lg hover:bg-zinc-50 transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto"
+          className="inline-flex items-center justify-center min-h-11 gap-2 px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary border border-border-custom rounded-lg hover:bg-bg-base transition-colors disabled:opacity-50 cursor-pointer self-start sm:self-auto"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           Refresh
@@ -191,7 +191,7 @@ export default function AdminPoliciesPage() {
       )}
 
       {lastRefreshed && (
-        <p className="text-xs text-[#9CA3AF]">
+        <p className="text-xs text-text-muted">
           Last updated: {lastRefreshed.toLocaleTimeString('en-KE')}
           {policies.some((p) => p.status === 'pending' || p.status === 'processing') &&
             ' — Auto-refreshing every 3s'}
@@ -200,56 +200,56 @@ export default function AdminPoliciesPage() {
 
       {loading && policies.length === 0 ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="w-6 h-6 animate-spin text-[#1B6CA8]" />
-          <span className="ml-2 text-sm text-[#6B7280]">Loading policies...</span>
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+          <span className="ml-2 text-sm text-text-secondary">Loading policies...</span>
         </div>
       ) : policies.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-zinc-300 p-12 text-center bg-white shadow-sm">
-          <FileText className="w-12 h-12 mx-auto text-zinc-300 mb-4" />
-          <h2 className="text-lg font-semibold text-[#111827] mb-2">No policies yet</h2>
-          <p className="text-[#6B7280] text-sm mb-4">
+        <div className="rounded-xl border border-dashed border-border-custom p-12 text-center bg-surface shadow-sm">
+          <FileText className="w-12 h-12 mx-auto text-text-muted mb-4" />
+          <h2 className="text-lg font-semibold text-text-primary mb-2">No policies yet</h2>
+          <p className="text-text-secondary text-sm mb-4">
             Upload your first policy document to get started.
           </p>
           <Link
             href="/admin/upload"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#1B6CA8] hover:bg-[#0D4F80] text-white font-medium rounded-md text-sm transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-md text-sm transition-colors"
           >
             Upload Policy
           </Link>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-[#E5E7EB] bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-xl border border-border-custom bg-surface shadow-sm">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#E5E7EB] bg-[#F9FAFB]">
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+              <tr className="bg-bg-base">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Title
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Ministry
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Category
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Status
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Summary
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Audio
                 </th>
-                <th className="text-left px-4 py-3 font-semibold text-[#6B7280] text-xs uppercase tracking-wider">
+                <th className="text-left px-4 py-3 font-semibold text-text-secondary text-xs uppercase tracking-wider">
                   Date
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E7EB]">
+            <tbody className="divide-y divide-border-custom">
               {policies.map((policy) => {
                 const statusCfg = STATUS_CONFIG[policy.status];
                 return (
-                  <tr key={policy.id} className="hover:bg-[#F9FAFB] transition-colors">
+                  <tr key={policy.id} className="hover:bg-bg-base transition-colors">
                     <td className="px-4 py-3">
                       <Link
                         href={`/policies/${policy.id}`}
@@ -258,8 +258,8 @@ export default function AdminPoliciesPage() {
                         {policy.title}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-[#6B7280]">{policy.ministry}</td>
-                    <td className="px-4 py-3 text-[#6B7280]">{policy.category ?? '—'}</td>
+                    <td className="px-4 py-3 text-text-secondary">{policy.ministry}</td>
+                    <td className="px-4 py-3 text-text-secondary">{policy.category ?? '—'}</td>
                     <td className="px-4 py-3">
                       <span
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${statusCfg.className}`}
@@ -270,7 +270,7 @@ export default function AdminPoliciesPage() {
                     </td>
                     <td className="px-4 py-3 text-[#6B7280] max-w-[200px]">
                       {policy.summary ? (
-                        <span className="text-xs leading-relaxed">
+                        <span className="text-xs text-text-secondary leading-relaxed">
                           {truncateSummary(policy.summary)}
                         </span>
                       ) : policy.status === 'pending' ? (
@@ -278,7 +278,7 @@ export default function AdminPoliciesPage() {
                       ) : policy.status === 'processing' ? (
                         <span className="text-xs text-blue-600 italic">Generating summary...</span>
                       ) : (
-                        <span className="text-xs text-[#9CA3AF] italic">Not available</span>
+                        <span className="text-xs text-text-muted italic">Not available</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -288,10 +288,10 @@ export default function AdminPoliciesPage() {
                           Ready
                         </span>
                       ) : (
-                        <span className="text-xs text-[#9CA3AF]">—</span>
+                        <span className="text-xs text-text-muted">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-xs text-[#6B7280] whitespace-nowrap">
+                    <td className="px-4 py-3 text-xs text-text-muted whitespace-nowrap">
                       {formatDate(policy.created_at)}
                     </td>
                   </tr>

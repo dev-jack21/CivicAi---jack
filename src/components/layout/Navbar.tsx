@@ -115,7 +115,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b bg-white sticky top-0 z-40">
+    <header className="bg-surface sticky top-0 z-40 shadow-sm">
       <nav
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
         role="navigation"
@@ -123,27 +123,27 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2.5 min-h-11 focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] rounded-md"
+          className="flex items-center gap-2.5 min-h-11 focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" className="h-10 w-auto" />
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight text-[#111827] leading-none">
+            <span className="text-lg font-bold tracking-tight text-text-primary leading-none">
               CivicAI
             </span>
-            <span className="text-[10px] text-[#6B7280] leading-tight">
+            <span className="text-[10px] text-text-secondary leading-tight">
               Understand. Participate.
             </span>
           </div>
         </Link>
 
         {/* Desktop navigation & Accessibility Controls (640px and up) */}
-        <div className="hidden sm:flex items-center gap-4 text-sm font-medium text-[#6B7280]">
-          {/* Accessibility Buttons */}
-          <div className="flex items-center border-r border-[#E5E7EB] pr-4 gap-2">
+        <div className="hidden sm:flex items-center gap-4 text-sm font-medium text-text-secondary">
+          {/* Accessibility Buttons — no divider, just grouped with a small gap */}
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleContrast}
-              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-zinc-100 text-[#6B7280] hover:text-[#111827] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-bg-base text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               title="Toggle High Contrast Mode"
               aria-label="Toggle High Contrast Mode"
             >
@@ -151,7 +151,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={cycleFontSize}
-              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-zinc-100 text-[#6B7280] hover:text-[#111827] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+              className="inline-flex items-center justify-center p-2 rounded-md hover:bg-bg-base text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               title={`Increase Font Size (Current: ${fontSize})`}
               aria-label={`Increase Font Size (Current: ${fontSize})`}
             >
@@ -164,7 +164,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               aria-current={pathname === link.href ? 'page' : undefined}
-              className="inline-flex items-center min-h-11 px-3 hover:text-[#111827] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] rounded-md"
+              className="inline-flex items-center min-h-11 px-3 hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
             >
               {link.label}
             </Link>
@@ -174,7 +174,7 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link
                 href="/profile"
-                className="inline-flex items-center gap-1.5 min-h-11 px-3 text-[#1B6CA8] hover:text-[#0D4F80] transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] rounded-md"
+                className="inline-flex items-center gap-1.5 min-h-11 px-3 text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"
               >
                 <UserIcon className="w-4 h-4" />
                 Profile
@@ -190,7 +190,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="inline-flex items-center min-h-11 px-4 bg-[#1B6CA8] hover:bg-[#0D4F80] text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:ring-offset-2"
+              className="inline-flex items-center min-h-11 px-4 bg-primary hover:bg-primary-dark text-white rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Sign In
             </Link>
@@ -201,14 +201,14 @@ export default function Navbar() {
         <div className="flex sm:hidden items-center gap-1">
           <button
             onClick={toggleContrast}
-            className="p-2 rounded-md text-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+            className="p-2 rounded-md text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Toggle High Contrast Mode"
           >
             <Eye className="w-5 h-5" />
           </button>
           <button
             onClick={cycleFontSize}
-            className="p-2 rounded-md text-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+            className="p-2 rounded-md text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Cycle Font Size"
           >
             <Type className="w-5 h-5" />
@@ -217,7 +217,7 @@ export default function Navbar() {
             ref={menuButtonRef}
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="inline-flex items-center justify-center min-h-11 min-w-11 text-[#6B7280] hover:text-[#111827] hover:bg-gray-100 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+            className="inline-flex items-center justify-center min-h-11 min-w-11 text-text-secondary hover:text-text-primary hover:bg-bg-base rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-nav-menu"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -231,7 +231,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu panel */}
+      {/* Mobile menu backdrop */}
       {isMobileMenuOpen && (
         <div
           className="sm:hidden fixed inset-0 top-16 bg-black/40 z-30"
@@ -243,7 +243,7 @@ export default function Navbar() {
       <div
         id="mobile-nav-menu"
         ref={menuRef}
-        className={`sm:hidden absolute left-0 right-0 top-16 bg-white border-b border-border-custom shadow-lg z-40 transform transition-transform duration-200 ease-in-out ${
+        className={`sm:hidden absolute left-0 right-0 top-16 bg-surface shadow-lg z-40 transform transition-transform duration-200 ease-in-out ${
           isMobileMenuOpen
             ? 'translate-y-0 opacity-100'
             : '-translate-y-2 opacity-0 pointer-events-none'
@@ -256,7 +256,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               aria-current={pathname === link.href ? 'page' : undefined}
-              className="flex items-center min-h-11 px-3 text-sm font-medium text-[#6B7280] hover:text-[#111827] hover:bg-gray-50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+              className="flex items-center min-h-11 px-3 text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-base rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               tabIndex={isMobileMenuOpen ? 0 : -1}
             >
               {link.label}
@@ -266,7 +266,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/profile"
-                className="flex items-center min-h-11 px-3 text-sm font-medium text-[#1B6CA8] hover:bg-gray-50 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8]"
+                className="flex items-center min-h-11 px-3 text-sm font-medium text-primary hover:bg-bg-base rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                 tabIndex={isMobileMenuOpen ? 0 : -1}
               >
                 <UserIcon className="w-4 h-4 mr-2" />
@@ -274,7 +274,7 @@ export default function Navbar() {
               </Link>
               <button
                 onClick={handleSignOut}
-                className="flex w-full items-center min-h-11 px-3 text-sm font-medium text-red-600 hover:bg-gray-50 rounded-md transition-colors text-left focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="flex w-full items-center min-h-11 px-3 text-sm font-medium text-red-600 hover:bg-bg-base rounded-md transition-colors text-left focus:outline-none focus:ring-2 focus:ring-red-500"
                 tabIndex={isMobileMenuOpen ? 0 : -1}
               >
                 <LogOut className="w-4 h-4 mr-2" />
@@ -284,7 +284,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="flex items-center justify-center min-h-11 px-4 mt-2 bg-[#1B6CA8] hover:bg-[#0D4F80] text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:ring-offset-2"
+              className="flex items-center justify-center min-h-11 px-4 mt-2 bg-primary hover:bg-primary-dark text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               tabIndex={isMobileMenuOpen ? 0 : -1}
             >
               Sign In

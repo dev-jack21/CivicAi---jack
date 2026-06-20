@@ -79,7 +79,7 @@ export default function PolicyCard({
         </span>
       </div>
 
-      <div className="flex items-center gap-3 pt-3 border-t border-border-custom flex-wrap">
+      <div className="flex items-center gap-3 pt-3 flex-wrap">
         <Link
           href={`/policies/${id}`}
           className="inline-flex items-center gap-1.5 min-h-11 px-2 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-md"

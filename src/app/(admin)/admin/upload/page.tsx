@@ -216,11 +216,11 @@ export default function AdminUploadPage() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-[#E5E7EB] pb-4">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111827]">
+      <div className="pb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary">
           Upload New Policy Document
         </h1>
-        <p className="mt-1 text-sm text-[#6B7280]">
+        <p className="mt-1 text-sm text-text-secondary">
           Fill in the details and upload the document to publish a new policy.
         </p>
       </div>
@@ -245,10 +245,10 @@ export default function AdminUploadPage() {
         </div>
       )}
 
-      <div className="bg-white border border-[#E5E7EB] rounded-xl shadow-sm p-4 sm:p-8">
+      <div className="bg-surface border border-border-custom rounded-xl shadow-sm p-4 sm:p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-[#6B7280] mb-1.5">
+            <label htmlFor="title" className="block text-sm font-medium text-text-secondary mb-1.5">
               Policy Title <span className="text-red-500">*</span>
             </label>
             <input
@@ -257,8 +257,8 @@ export default function AdminUploadPage() {
               {...register('title')}
               aria-invalid={errors.title ? 'true' : 'false'}
               aria-describedby={errors.title ? 'title-error' : undefined}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white text-[#111827] placeholder-zinc-400 ${
-                errors.title ? 'border-red-500 focus:ring-red-500' : 'border-[#E5E7EB]'
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary placeholder-zinc-400 ${
+                errors.title ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
               }`}
               placeholder="Enter the policy title"
               disabled={isLoading || !!successId}
@@ -277,7 +277,10 @@ export default function AdminUploadPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="ministry" className="block text-sm font-medium text-[#6B7280] mb-1.5">
+              <label
+                htmlFor="ministry"
+                className="block text-sm font-medium text-text-secondary mb-1.5"
+              >
                 Ministry <span className="text-red-500">*</span>
               </label>
               <select
@@ -285,8 +288,8 @@ export default function AdminUploadPage() {
                 {...register('ministry')}
                 aria-invalid={errors.ministry ? 'true' : 'false'}
                 aria-describedby={errors.ministry ? 'ministry-error' : undefined}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white text-[#111827] ${
-                  errors.ministry ? 'border-red-500 focus:ring-red-500' : 'border-[#E5E7EB]'
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary ${
+                  errors.ministry ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
                 }`}
                 disabled={isLoading || !!successId}
               >
@@ -312,7 +315,7 @@ export default function AdminUploadPage() {
             <div>
               <label
                 htmlFor="category_id"
-                className="block text-sm font-medium text-[#6B7280] mb-1.5"
+                className="block text-sm font-medium text-text-secondary mb-1.5"
               >
                 Category <span className="text-red-500">*</span>
               </label>
@@ -321,8 +324,8 @@ export default function AdminUploadPage() {
                 {...register('category_id')}
                 aria-invalid={errors.category_id ? 'true' : 'false'}
                 aria-describedby={errors.category_id ? 'category-error' : undefined}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white text-[#111827] ${
-                  errors.category_id ? 'border-red-500 focus:ring-red-500' : 'border-[#E5E7EB]'
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary ${
+                  errors.category_id ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
                 }`}
                 disabled={isLoading || !!successId}
               >
@@ -349,7 +352,7 @@ export default function AdminUploadPage() {
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-[#6B7280] mb-1.5"
+              className="block text-sm font-medium text-text-secondary mb-1.5"
             >
               Description
             </label>
@@ -359,8 +362,8 @@ export default function AdminUploadPage() {
               {...register('description')}
               aria-invalid={errors.description ? 'true' : 'false'}
               aria-describedby={errors.description ? 'description-error' : undefined}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white text-[#111827] placeholder-zinc-400 resize-y ${
-                errors.description ? 'border-red-500 focus:ring-red-500' : 'border-[#E5E7EB]'
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary placeholder-zinc-400 resize-y ${
+                errors.description ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
               }`}
               placeholder="Brief description of the policy (optional)"
               disabled={isLoading || !!successId}
@@ -380,7 +383,7 @@ export default function AdminUploadPage() {
           <div>
             <label
               htmlFor="effective_date"
-              className="block text-sm font-medium text-[#6B7280] mb-1.5"
+              className="block text-sm font-medium text-text-secondary mb-1.5"
             >
               Effective Date
             </label>
@@ -388,13 +391,13 @@ export default function AdminUploadPage() {
               id="effective_date"
               type="date"
               {...register('effective_date')}
-              className="w-full px-3 py-2 border border-[#E5E7EB] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white text-[#111827]"
+              className="w-full px-3 py-2 border border-border-custom rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary"
               disabled={isLoading || !!successId}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-[#6B7280] mb-1.5">
+            <label className="block text-sm font-medium text-text-secondary mb-1.5">
               Upload Document <span className="text-red-500">*</span>
             </label>
             <div
@@ -409,7 +412,7 @@ export default function AdminUploadPage() {
                     ? 'border-green-400 bg-green-50'
                     : errors.file
                       ? 'border-red-400 bg-red-50'
-                      : 'border-zinc-300 hover:border-zinc-400 bg-white'
+                      : 'border-border-custom hover:border-zinc-400 bg-surface'
               }`}
               role="button"
               tabIndex={0}
@@ -434,7 +437,7 @@ export default function AdminUploadPage() {
               {fileName ? (
                 <div className="flex flex-col items-center gap-2">
                   <CheckCircle2 className="w-8 h-8 text-green-600" />
-                  <p className="text-sm font-medium text-[#111827]">{fileName}</p>
+                  <p className="text-sm font-medium text-text-primary">{fileName}</p>
                   {!isLoading && !successId && (
                     <button
                       type="button"
@@ -451,10 +454,10 @@ export default function AdminUploadPage() {
               ) : (
                 <div className="flex flex-col items-center gap-2">
                   <Upload className="w-8 h-8 text-zinc-400" />
-                  <p className="text-sm text-[#111827]">
+                  <p className="text-sm text-text-primary">
                     📄 Drop PDF or DOCX here, or click to browse
                   </p>
-                  <p className="text-xs text-[#9CA3AF]">Max 20MB | PDF and DOCX only</p>
+                  <p className="text-xs text-text-muted">Max 20MB | PDF and DOCX only</p>
                 </div>
               )}
             </div>
@@ -469,7 +472,7 @@ export default function AdminUploadPage() {
           <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
             <Link
               href="/admin/policies"
-              className={`inline-flex items-center justify-center min-h-11 py-2 px-4 border border-[#E5E7EB] text-[#6B7280] hover:bg-zinc-50 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:ring-offset-2 ${
+              className={`inline-flex items-center justify-center min-h-11 py-2 px-4 border border-border-custom text-text-secondary hover:bg-bg-base rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
                 isLoading || !!successId ? 'pointer-events-none opacity-50' : ''
               }`}
             >
@@ -478,7 +481,7 @@ export default function AdminUploadPage() {
             <button
               type="submit"
               disabled={isLoading || !!successId}
-              className="inline-flex items-center justify-center min-h-11 py-2 px-6 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium rounded-md shadow-sm transition-all text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer gap-2"
+              className="inline-flex items-center justify-center min-h-11 py-2 px-6 bg-primary hover:bg-primary-dark disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-medium rounded-md shadow-sm transition-all text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer gap-2"
             >
               {isLoading ? (
                 <>

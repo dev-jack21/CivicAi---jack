@@ -3,8 +3,8 @@ import Link from 'next/link';
 export default function UnauthorizedPage() {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-6 text-center">
-      <div className="max-w-md w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-8 shadow-sm">
-        <div className="w-16 h-16 bg-red-50 dark:bg-red-950/30 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="max-w-md w-full bg-surface border border-border-custom rounded-xl p-8 shadow-sm">
+        <div className="w-16 h-16 bg-red-500/10 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg
             className="w-8 h-8"
             fill="none"
@@ -20,21 +20,21 @@ export default function UnauthorizedPage() {
             />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">Access Denied</h1>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-8 text-sm leading-relaxed">
+        <h1 className="text-2xl font-bold text-text-primary mb-2">Access Denied</h1>
+        <p className="text-text-secondary mb-8 text-sm leading-relaxed">
           You do not have the required permissions to view this page. Please contact your system
           administrator if you believe this is an error.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
-            className="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-950 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 dark:focus:ring-zinc-100"
+            className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Go Home
           </Link>
           <Link
             href="/login"
-            className="px-5 py-2.5 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-zinc-700 dark:text-zinc-300 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
+            className="px-5 py-2.5 border border-border-custom hover:bg-bg-base text-text-secondary text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             Log In
           </Link>

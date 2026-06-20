@@ -39,19 +39,33 @@ export default function FeedbackTable({ feedback, onStatusChange }: FeedbackTabl
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
         <thead>
-          <tr className="border-b bg-gray-50">
-            <th className="p-3 text-left">Policy</th>
-            <th className="p-3 text-left">User</th>
-            <th className="p-3 text-left">Comment</th>
-            <th className="p-3 text-left">Status</th>
-            <th className="p-3 text-left">Submitted</th>
-            <th className="p-3 text-left">Reviewed</th>
-            <th className="p-3 text-left">Actions</th>
+          <tr className="bg-bg-base">
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Policy
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              User
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Comment
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Status
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Submitted
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Reviewed
+            </th>
+            <th className="p-3 text-left text-text-secondary text-xs font-semibold uppercase tracking-wider">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
           {feedback.map((item) => (
-            <tr key={item.id} className="border-b hover:bg-gray-50">
+            <tr key={item.id} className="hover:bg-bg-base transition-colors">
               <td className="p-3">
                 <div className="font-medium text-text-primary">
                   {item.policy?.title || 'Unknown Policy'}
@@ -80,7 +94,7 @@ export default function FeedbackTable({ feedback, onStatusChange }: FeedbackTabl
                   <select
                     value={item.status}
                     onChange={(e) => onStatusChange(item.id, e.target.value)}
-                    className="text-sm border border-gray-300 rounded px-2 py-1 bg-white"
+                    className="text-sm border border-border-custom rounded px-2 py-1 bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="unreviewed">Unreviewed</option>
                     <option value="reviewed">Reviewed</option>

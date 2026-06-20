@@ -107,7 +107,7 @@ export default function AdminFeedbackPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="border-b border-border-custom pb-4">
+        <div className="pb-4">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-inter">
             Feedback Review
           </h1>
@@ -115,11 +115,11 @@ export default function AdminFeedbackPage() {
             Review and respond to citizen comments and ratings on policies.
           </p>
         </div>
-        <div className="rounded-xl border border-dashed border-zinc-300 p-12 text-center bg-white shadow-sm">
+        <div className="rounded-xl border border-dashed border-border-custom p-12 text-center bg-surface shadow-sm">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto" />
-            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
-            <div className="h-32 bg-gray-200 rounded" />
+            <div className="h-4 bg-border-custom rounded w-3/4 mx-auto" />
+            <div className="h-4 bg-border-custom rounded w-1/2 mx-auto" />
+            <div className="h-32 bg-border-custom rounded" />
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function AdminFeedbackPage() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-border-custom pb-4">
+      <div className="pb-4">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary font-inter">
           Feedback Review
         </h1>
@@ -137,7 +137,7 @@ export default function AdminFeedbackPage() {
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-border-custom p-6 shadow-sm">
+      <div className="bg-surface rounded-xl border border-border-custom p-6 shadow-sm">
         <div className="flex flex-wrap gap-4 mb-6">
           <div className="flex-1 min-w-48">
             <label

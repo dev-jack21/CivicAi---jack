@@ -1,12 +1,12 @@
 export default function PrivacyPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
-      <h1 className="text-3xl font-bold tracking-tight text-[#111827] mb-6">Privacy Policy</h1>
-      <p className="text-sm text-[#6B7280] mb-8">Last updated: June 2026</p>
+      <h1 className="text-3xl font-bold tracking-tight text-text-primary mb-6">Privacy Policy</h1>
+      <p className="text-sm text-text-secondary mb-8">Last updated: June 2026</p>
 
-      <div className="space-y-8 text-sm text-[#374151] leading-relaxed">
+      <div className="space-y-8 text-sm text-text-primary leading-relaxed">
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
             1. Compliance with the Kenya Data Protection Act 2019
           </h2>
           <p>
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
             2. Data Minimization & Collection
           </h2>
           <p>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">3. How Your Data is Used</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">3. How Your Data is Used</h2>
           <p>
             Your email is used solely to authenticate your account and ensure unique feedback
             submissions. Your name and comments are displayed alongside the relevant policies to
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
             4. Sharing with Third Parties
           </h2>
           <p>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
             5. Data Retention & Your Rights
           </h2>
           <p>
@@ -67,7 +67,9 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-[#111827] mb-3">6. Data Breach & Security</h2>
+          <h2 className="text-lg font-semibold text-text-primary mb-3">
+            6. Data Breach & Security
+          </h2>
           <p>
             We protect your data using secure industry standards including SSL/TLS encryption in
             transit and secure database RLS (Row Level Security) policies at rest. In the event of a
