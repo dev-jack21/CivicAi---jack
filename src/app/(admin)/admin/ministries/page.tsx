@@ -218,7 +218,7 @@ export default function AdminMinistriesPage() {
           Add New Ministry
         </h2>
         <form onSubmit={handleAdd} className="flex flex-wrap gap-3 items-end">
-          <div className="flex-1 min-w-64">
+          <div className="flex-1 min-w-48">
             <label
               htmlFor="add-min-name"
               className="block text-xs font-medium text-text-secondary mb-1"
@@ -331,7 +331,7 @@ export default function AdminMinistriesPage() {
                         </td>
                         <td className="px-6 py-3">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${m.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${m.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
                           >
                             {m.policy_count} {m.policy_count === 1 ? 'policy' : 'policies'}
                           </span>
@@ -369,7 +369,7 @@ export default function AdminMinistriesPage() {
                         </td>
                         <td className="px-6 py-3">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${m.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${m.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
                           >
                             {m.policy_count} {m.policy_count === 1 ? 'policy' : 'policies'}
                           </span>

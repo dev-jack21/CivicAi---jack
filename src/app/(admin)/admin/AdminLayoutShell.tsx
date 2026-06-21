@@ -16,7 +16,7 @@ import {
   Building2,
 } from 'lucide-react';
 import { useConfirm } from '@/hooks/useConfirm';
-import { logout } from '@/lib/actions/auth';
+import { createClient } from '@/lib/supabase/client';
 
 interface Profile {
   full_name: string | null;
@@ -106,7 +106,9 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
       icon: 'logout',
     });
     if (ok) {
-      await logout();
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      window.location.href = '/login';
     }
   };
 

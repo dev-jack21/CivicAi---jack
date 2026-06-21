@@ -334,7 +334,7 @@ export default function AdminCategoriesPage() {
                         </td>
                         <td className="px-6 py-3">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${cat.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${cat.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
                           >
                             {cat.policy_count} {cat.policy_count === 1 ? 'policy' : 'policies'}
                           </span>
@@ -372,7 +372,7 @@ export default function AdminCategoriesPage() {
                         </td>
                         <td className="px-6 py-3">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${cat.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${cat.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
                           >
                             {cat.policy_count} {cat.policy_count === 1 ? 'policy' : 'policies'}
                           </span>
