@@ -144,7 +144,7 @@ GitHub (main branch)
 Vercel CI/CD
        │ build + test
        ▼
-Vercel Production (civicai.vercel.app)
+Vercel Production (civicai-sable.vercel.app)
        │
        ├── Edge Middleware (auth checks, rate limiting)
        ├── SSR Pages (Vercel Serverless Functions)
@@ -160,7 +160,7 @@ Vercel Production (civicai.vercel.app)
 |---|---|---|
 | Development | `dev` | localhost:3000 |
 | Staging | `staging` | civicai-staging.vercel.app |
-| Production | `main` | civicai.vercel.app |
+| Production | `main` | civicai-sable.vercel.app |
 
 ---
 

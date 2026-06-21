@@ -4,7 +4,7 @@
 
 CivicAI is a web platform that makes Kenyan government policy documents accessible to all citizens, regardless of literacy level, disability, or internet bandwidth. It is built by **Group 2, INTE 324 — Kabarak University (June 2026).**
 
-**Live:** [civicai.vercel.app](https://civicai.vercel.app)
+**Live:** [civicai-sable.vercel.app](https://civicai-sable.vercel.app/)
 
 ## The Problem
 
