@@ -15,6 +15,7 @@ import {
   Tag,
   Building2,
 } from 'lucide-react';
+import { useConfirm } from '@/hooks/useConfirm';
 import { logout } from '@/lib/actions/auth';
 
 interface Profile {
@@ -32,6 +33,7 @@ interface AdminLayoutShellProps {
 export default function AdminLayoutShell({ children, profile }: AdminLayoutShellProps) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { confirm, ConfirmModal } = useConfirm();
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -97,7 +99,13 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
   };
 
   const handleLogoutClick = async () => {
-    if (confirm('Are you sure you want to log out?')) {
+    const ok = await confirm({
+      title: 'Log out',
+      message: 'Are you sure you want to log out?',
+      confirmLabel: 'Log out',
+      icon: 'logout',
+    });
+    if (ok) {
       await logout();
     }
   };
@@ -345,6 +353,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
         {/* Content Wrapper */}
         <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-6xl w-full mx-auto">{children}</div>
       </main>
+      {ConfirmModal}
     </div>
   );
 }

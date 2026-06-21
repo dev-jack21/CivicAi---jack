@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Building2, Plus, Pencil, Trash2, Check, X, AlertCircle, Loader2 } from 'lucide-react';
+import { useConfirm } from '@/hooks/useConfirm';
 
 interface Ministry {
   id: number;
@@ -16,6 +17,7 @@ export default function AdminMinistriesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const { confirm, ConfirmModal } = useConfirm();
 
   // Add form
   const [addName, setAddName] = useState('');
@@ -150,7 +152,15 @@ export default function AdminMinistriesPage() {
       );
       return;
     }
-    if (!confirm(`Delete ministry "${m.name}"? This cannot be undone.`)) return;
+    if (
+      !(await confirm({
+        title: 'Delete ministry',
+        message: `Delete ministry "${m.name}"? This cannot be undone.`,
+        confirmLabel: 'Delete',
+        icon: 'delete',
+      }))
+    )
+      return;
     setDeletingId(m.id);
     try {
       const res = await fetch(`/api/admin/ministries/${m.id}`, { method: 'DELETE' });
@@ -319,7 +329,13 @@ export default function AdminMinistriesPage() {
                             className="w-full px-2 py-1 text-sm border border-border-custom rounded bg-surface text-text-primary font-mono focus:outline-none focus:ring-2 focus:ring-primary"
                           />
                         </td>
-                        <td className="px-6 py-3 text-text-muted">{m.policy_count}</td>
+                        <td className="px-6 py-3">
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${m.policy_count > 0 ? 'bg-primary/10 text-primary' : 'bg-bg-base text-text-muted border border-border-custom'}`}
+                          >
+                            {m.policy_count} {m.policy_count === 1 ? 'policy' : 'policies'}
+                          </span>
+                        </td>
                         <td className="px-6 py-3">
                           <div className="flex items-center justify-end gap-2">
                             <button
@@ -395,6 +411,7 @@ export default function AdminMinistriesPage() {
           </div>
         )}
       </div>
+      {ConfirmModal}
     </div>
   );
 }
