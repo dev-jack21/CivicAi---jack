@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { AlertCircle, CheckCircle2, Loader2, Upload } from 'lucide-react';
+import { Input, Textarea, Select, DatePicker } from '@/components/ui';
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -30,6 +31,12 @@ const uploadFormSchema = z.object({
 type FormData = z.infer<typeof uploadFormSchema>;
 
 interface Category {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+interface Ministry {
   id: number;
   name: string;
   slug: string;
@@ -67,6 +74,7 @@ const getCategoryForMinistry = (ministryName: string, categoriesList: Category[]
 export default function AdminUploadPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [ministries, setMinistries] = useState<Ministry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successId, setSuccessId] = useState<string | null>(null);
@@ -108,6 +116,12 @@ export default function AdminUploadPage() {
         }
         setCategories(data ?? []);
       });
+
+    // Fetch ministries from admin API
+    fetch('/api/admin/ministries')
+      .then((r) => r.json())
+      .then((data) => setMinistries(data.ministries ?? []))
+      .catch(() => console.error('Failed to load ministries'));
   }, []);
 
   useEffect(() => {
@@ -248,153 +262,64 @@ export default function AdminUploadPage() {
       <div className="bg-surface border border-border-custom rounded-xl shadow-sm p-4 sm:p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-text-secondary mb-1.5">
-              Policy Title <span className="text-red-500">*</span>
-            </label>
-            <input
+            <Input
               id="title"
-              type="text"
+              label="Policy Title"
+              required
               {...register('title')}
-              aria-invalid={errors.title ? 'true' : 'false'}
-              aria-describedby={errors.title ? 'title-error' : undefined}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary placeholder-zinc-400 ${
-                errors.title ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
-              }`}
+              error={errors.title?.message}
               placeholder="Enter the policy title"
               disabled={isLoading || !!successId}
             />
-            {errors.title && (
-              <p
-                id="title-error"
-                className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5"
-                role="alert"
-              >
-                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                {errors.title.message}
-              </p>
-            )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="ministry"
-                className="block text-sm font-medium text-text-secondary mb-1.5"
-              >
-                Ministry <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="ministry"
-                {...register('ministry')}
-                aria-invalid={errors.ministry ? 'true' : 'false'}
-                aria-describedby={errors.ministry ? 'ministry-error' : undefined}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary ${
-                  errors.ministry ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
-                }`}
-                disabled={isLoading || !!successId}
-              >
-                <option value="">Select ministry...</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={getMinistryForCategory(cat.name)}>
-                    {getMinistryForCategory(cat.name)}
-                  </option>
-                ))}
-              </select>
-              {errors.ministry && (
-                <p
-                  id="ministry-error"
-                  className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5"
-                  role="alert"
-                >
-                  <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                  {errors.ministry.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label
-                htmlFor="category_id"
-                className="block text-sm font-medium text-text-secondary mb-1.5"
-              >
-                Category <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="category_id"
-                {...register('category_id')}
-                aria-invalid={errors.category_id ? 'true' : 'false'}
-                aria-describedby={errors.category_id ? 'category-error' : undefined}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary ${
-                  errors.category_id ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
-                }`}
-                disabled={isLoading || !!successId}
-              >
-                <option value="">Select category...</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={String(cat.id)}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-              {errors.category_id && (
-                <p
-                  id="category-error"
-                  className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5"
-                  role="alert"
-                >
-                  <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                  {errors.category_id.message}
-                </p>
-              )}
-            </div>
+            <Select
+              id="ministry"
+              label="Ministry"
+              required
+              value={ministryVal}
+              onValueChange={(val) => setValue('ministry', val, { shouldValidate: true })}
+              error={errors.ministry?.message}
+              placeholder="Select ministry..."
+              options={ministries.map((m) => ({ value: m.name, label: m.name }))}
+              disabled={isLoading || !!successId}
+              containerClassName="flex-1"
+            />
+            <Select
+              id="category_id"
+              label="Category"
+              required
+              value={categoryIdVal}
+              onValueChange={(val) => setValue('category_id', val, { shouldValidate: true })}
+              error={errors.category_id?.message}
+              placeholder="Select category..."
+              options={categories.map((cat) => ({ value: String(cat.id), label: cat.name }))}
+              disabled={isLoading || !!successId}
+              containerClassName="flex-1"
+            />
           </div>
 
           <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-text-secondary mb-1.5"
-            >
-              Description
-            </label>
-            <textarea
+            <Textarea
               id="description"
+              label="Description"
               rows={3}
               {...register('description')}
-              aria-invalid={errors.description ? 'true' : 'false'}
-              aria-describedby={errors.description ? 'description-error' : undefined}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary placeholder-zinc-400 resize-y ${
-                errors.description ? 'border-red-500 focus:ring-red-500' : 'border-border-custom'
-              }`}
+              error={errors.description?.message}
               placeholder="Brief description of the policy (optional)"
               disabled={isLoading || !!successId}
             />
-            {errors.description && (
-              <p
-                id="description-error"
-                className="mt-1.5 text-xs text-red-600 flex items-center gap-1.5"
-                role="alert"
-              >
-                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
-                {errors.description.message}
-              </p>
-            )}
           </div>
 
-          <div>
-            <label
-              htmlFor="effective_date"
-              className="block text-sm font-medium text-text-secondary mb-1.5"
-            >
-              Effective Date
-            </label>
-            <input
-              id="effective_date"
-              type="date"
-              {...register('effective_date')}
-              className="w-full px-3 py-2 border border-border-custom rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary"
-              disabled={isLoading || !!successId}
-            />
-          </div>
+          <DatePicker
+            id="effective_date"
+            label="Effective Date"
+            value={watch('effective_date')}
+            onChange={(val) => setValue('effective_date', val)}
+            disabled={isLoading || !!successId}
+            warnIfPast
+          />
 
           <div>
             <label className="block text-sm font-medium text-text-secondary mb-1.5">
@@ -407,7 +332,7 @@ export default function AdminUploadPage() {
               onClick={() => !isLoading && !successId && fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
                 isDragOver
-                  ? 'border-[#1B6CA8] bg-blue-50'
+                  ? 'border-primary bg-blue-50'
                   : fileName
                     ? 'border-green-400 bg-green-50'
                     : errors.file

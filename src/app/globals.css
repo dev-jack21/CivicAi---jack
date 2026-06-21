@@ -83,3 +83,44 @@ html.font-size-lg {
 html.font-size-xl {
   font-size: 22px !important;
 }
+
+/* ── Scrollbar styling ────────────────────────────── */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-custom) transparent;
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-custom);
+  border-radius: 3px;
+  transition: background-color 0.15s;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-muted);
+}
+
+/* High Contrast Mode overrides */
+html.high-contrast * {
+  scrollbar-color: var(--color-border-custom) transparent;
+}
+
+html.high-contrast *::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-custom);
+}
+
+html.high-contrast *::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-secondary);
+}

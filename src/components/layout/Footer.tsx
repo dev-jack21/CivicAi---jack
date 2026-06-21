@@ -15,25 +15,25 @@ export default function Footer() {
           <div className="flex flex-wrap gap-4 text-xs font-medium text-text-secondary">
             <Link
               href="/about"
-              className="hover:text-[#1B6CA8] transition-colors focus:outline-none focus:underline"
+              className="hover:text-primary transition-colors focus:outline-none focus:underline"
             >
               About
             </Link>
             <Link
               href="/privacy"
-              className="hover:text-[#1B6CA8] transition-colors focus:outline-none focus:underline"
+              className="hover:text-primary transition-colors focus:outline-none focus:underline"
             >
               Privacy Policy
             </Link>
             <Link
               href="/accessibility"
-              className="hover:text-[#1B6CA8] transition-colors focus:outline-none focus:underline"
+              className="hover:text-primary transition-colors focus:outline-none focus:underline"
             >
               Accessibility Statement
             </Link>
             <Link
               href="/contact"
-              className="hover:text-[#1B6CA8] transition-colors focus:outline-none focus:underline"
+              className="hover:text-primary transition-colors focus:outline-none focus:underline"
             >
               Contact
             </Link>

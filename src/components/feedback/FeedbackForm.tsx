@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { feedbackSchema, type FeedbackInput } from '@/lib/validators/feedback';
+import { Textarea } from '@/components/ui';
 
 interface FeedbackFormProps {
   policyId: string;
@@ -60,7 +61,7 @@ export default function FeedbackForm({ policyId, user }: FeedbackFormProps) {
 
   if (!user) {
     return (
-      <div className="bg-gray-50 border border-border-custom rounded-lg p-6 text-center">
+      <div className="bg-surface border border-border-custom rounded-lg p-6 text-center shadow-sm">
         <p className="text-text-secondary mb-4">Login to submit your feedback</p>
         <a
           href="/login"
@@ -73,13 +74,13 @@ export default function FeedbackForm({ policyId, user }: FeedbackFormProps) {
   }
 
   return (
-    <div className="bg-gray-50 border border-border-custom rounded-lg p-6">
+    <div className="bg-surface border border-border-custom rounded-lg p-6 shadow-sm">
       <h3 className="text-lg font-semibold text-text-primary mb-4">Submit Your Feedback</h3>
 
       {success && (
         <div
           role="alert"
-          className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded-md text-sm"
+          className="mb-4 p-3 bg-green-500/10 border border-green-500/20 text-green-600 rounded-md text-sm"
         >
           Thank you! Your feedback has been submitted successfully.
         </div>
@@ -88,7 +89,7 @@ export default function FeedbackForm({ policyId, user }: FeedbackFormProps) {
       {error && (
         <div
           role="alert"
-          className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded-md text-sm"
+          className="mb-4 p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-md text-sm"
         >
           {error}
         </div>
@@ -99,19 +100,14 @@ export default function FeedbackForm({ policyId, user }: FeedbackFormProps) {
           <label htmlFor="content" className="block text-sm font-medium text-text-secondary mb-1">
             Your Feedback
           </label>
-          <textarea
+          <Textarea
             id="content"
             rows={4}
             {...register('content')}
+            error={errors.content?.message}
             placeholder="Share your thoughts on this policy..."
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting || success}
           />
-          {errors.content && (
-            <p role="alert" className="mt-1 text-sm text-red-600">
-              {errors.content.message}
-            </p>
-          )}
         </div>
 
         <div className="flex items-center justify-between">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Search, Filter, ChevronDown } from 'lucide-react';
+import { Select, Input, Button } from '@/components/ui';
 
 interface PolicySearchFiltersProps {
   search: string;
@@ -29,52 +30,37 @@ export default function PolicySearchFilters({
         <label htmlFor={`category-filter-${variant}`} className="sr-only">
           Filter by category
         </label>
-        <div className="relative">
-          <Filter
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none"
-            aria-hidden="true"
-          />
-          <select
-            id={`category-filter-${variant}`}
-            name="category"
-            defaultValue={category}
-            className="w-full appearance-none pl-10 pr-8 min-h-11 py-2.5 border border-border-custom rounded-md text-sm bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-          >
-            <option value="">All Categories</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.slug}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Select
+          id={`category-filter-${variant}`}
+          name="category"
+          defaultValue={category}
+          options={[
+            { value: '', label: 'All Categories' },
+            ...categories.map((cat) => ({ value: cat.slug, label: cat.name })),
+          ]}
+          containerClassName="w-full"
+        />
       </div>
 
       <div>
         <label htmlFor={`ministry-filter-${variant}`} className="sr-only">
           Filter by ministry
         </label>
-        <select
+        <Select
           id={`ministry-filter-${variant}`}
           name="ministry"
           defaultValue={ministry}
-          className="w-full appearance-none px-3 min-h-11 py-2.5 border border-border-custom rounded-md text-sm bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        >
-          <option value="">All Ministries</option>
-          {ministries.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
+          options={[
+            { value: '', label: 'All Ministries' },
+            ...ministries.map((m) => ({ value: m, label: m })),
+          ]}
+          containerClassName="w-full"
+        />
       </div>
 
-      <button
-        type="submit"
-        className="w-full sm:w-auto inline-flex items-center justify-center min-h-11 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-      >
+      <Button type="submit" className="w-full sm:w-auto" size="md">
         Apply Filters
-      </button>
+      </Button>
     </>
   );
 
@@ -99,13 +85,13 @@ export default function PolicySearchFilters({
               className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted"
               aria-hidden="true"
             />
-            <input
+            <Input
               id="search-input-sidebar"
               name="search"
               type="search"
               defaultValue={search}
               placeholder="Search policies..."
-              className="w-full pl-10 pr-4 min-h-11 py-2.5 border border-border-custom rounded-md text-sm bg-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="pl-10 pr-4"
             />
           </div>
         </div>
@@ -135,13 +121,13 @@ export default function PolicySearchFilters({
         <label htmlFor="search-input-inline" className="sr-only">
           Search policies
         </label>
-        <input
+        <Input
           id="search-input-inline"
           name="search"
           type="search"
           defaultValue={search}
           placeholder="Search policies..."
-          className="w-full pl-10 pr-4 min-h-11 py-2.5 border border-border-custom rounded-md text-sm bg-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="pl-10"
         />
       </div>
 
@@ -152,10 +138,11 @@ export default function PolicySearchFilters({
       <div className="hidden sm:block lg:hidden">
         {!filtersOpen && category && <input type="hidden" name="category" value={category} />}
         {!filtersOpen && ministry && <input type="hidden" name="ministry" value={ministry} />}
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          className="w-full justify-between"
           onClick={() => setFiltersOpen(!filtersOpen)}
-          className="w-full flex items-center justify-between min-h-11 px-4 py-2.5 border border-border-custom rounded-md text-sm font-medium text-text-primary bg-surface hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
           aria-expanded={filtersOpen}
           aria-controls="tablet-filters-panel"
         >
@@ -170,7 +157,7 @@ export default function PolicySearchFilters({
             className={`w-4 h-4 text-text-muted transition-transform ${filtersOpen ? 'rotate-180' : ''}`}
             aria-hidden="true"
           />
-        </button>
+        </Button>
         {filtersOpen && (
           <div
             id="tablet-filters-panel"

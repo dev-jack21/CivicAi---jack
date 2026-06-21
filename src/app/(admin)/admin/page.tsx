@@ -1,15 +1,6 @@
-import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { verifyAdmin } from '@/lib/auth/admin';
 import { redirect } from 'next/navigation';
-import {
-  FileText,
-  MessageSquare,
-  Users,
-  Eye,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-} from 'lucide-react';
+import { FileText, MessageSquare, Users, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AdminDashboardPage() {

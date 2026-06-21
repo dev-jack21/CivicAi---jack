@@ -12,6 +12,8 @@ import {
   Menu,
   X,
   ChevronRight,
+  Tag,
+  Building2,
 } from 'lucide-react';
 import { logout } from '@/lib/actions/auth';
 
@@ -72,6 +74,18 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
       icon: MessageSquare,
       description: 'Citizen reviews',
     },
+    {
+      name: 'Categories',
+      href: '/admin/categories',
+      icon: Tag,
+      description: 'Policy categories',
+    },
+    {
+      name: 'Ministries',
+      href: '/admin/ministries',
+      icon: Building2,
+      description: 'Government bodies',
+    },
   ];
 
   // Helper to determine if link is active
@@ -102,7 +116,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
   };
 
   return (
-    <div className="min-h-screen bg-bg-base font-inter flex flex-col lg:flex-row text-text-primary antialiased">
+    <div className="min-h-screen bg-bg-base font-inter text-text-primary antialiased">
       {/* Skip Navigation Link for Accessibility */}
       <a
         href="#main-content"
@@ -238,7 +252,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
       </aside>
 
       {/* DESKTOP PERSISTENT SIDEBAR */}
-      <aside className="hidden lg:flex flex-col w-72 bg-surface border-r border-border-custom sticky top-0 h-screen shrink-0">
+      <aside className="hidden lg:flex flex-col w-72 bg-surface border-r border-border-custom fixed left-0 top-0 h-screen z-30 shrink-0">
         {/* Sidebar Header Brand */}
         <div className="h-16 px-6 border-b border-border-custom flex items-center">
           <Link
@@ -257,7 +271,7 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
         </div>
 
         {/* Desktop Sidebar Navigation Links */}
-        <nav className="flex-1 p-6 space-y-1.5" aria-label="Desktop navigation">
+        <nav className="flex-1 p-6 space-y-1.5 overflow-y-auto" aria-label="Desktop navigation">
           {navItems.map((item) => {
             const active = isActive(item.href);
             const Icon = item.icon;
@@ -327,11 +341,9 @@ export default function AdminLayoutShell({ children, profile }: AdminLayoutShell
       </aside>
 
       {/* MAIN CONTENT AREA */}
-      <main id="main-content" className="flex-1 flex flex-col min-w-0 relative">
+      <main id="main-content" className="lg:ml-72 flex flex-col min-w-0 relative">
         {/* Content Wrapper */}
-        <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-6xl w-full mx-auto">
-          {children}
-        </div>
+        <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-6xl w-full mx-auto">{children}</div>
       </main>
     </div>
   );

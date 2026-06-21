@@ -48,10 +48,10 @@ export default function FeedbackList({ policyId }: FeedbackListProps) {
     return (
       <div className="space-y-4 animate-pulse">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="bg-white border border-border-custom rounded-lg p-4">
-            <div className="h-4 w-32 bg-gray-100 rounded mb-2" />
-            <div className="h-3 w-24 bg-gray-100 rounded" />
-            <div className="h-3 w-full bg-gray-100 rounded mt-2" />
+          <div key={i} className="bg-surface border border-border-custom rounded-lg p-4 shadow-sm">
+            <div className="h-4 w-32 bg-border-custom rounded mb-2" />
+            <div className="h-3 w-24 bg-border-custom rounded" />
+            <div className="h-3 w-full bg-border-custom rounded mt-2" />
           </div>
         ))}
       </div>
@@ -60,7 +60,7 @@ export default function FeedbackList({ policyId }: FeedbackListProps) {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+      <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-500">
         <p>Error loading feedback: {error}</p>
       </div>
     );
@@ -68,7 +68,7 @@ export default function FeedbackList({ policyId }: FeedbackListProps) {
 
   if (feedback.length === 0) {
     return (
-      <div className="bg-gray-50 border border-border-custom rounded-lg p-8 text-center">
+      <div className="bg-surface border border-border-custom rounded-lg p-8 text-center shadow-sm">
         <p className="text-text-secondary">No public feedback available yet.</p>
       </div>
     );
@@ -102,7 +102,7 @@ export default function FeedbackList({ policyId }: FeedbackListProps) {
         return (
           <div
             key={item.id}
-            className="bg-white border border-border-custom rounded-lg p-4 hover:bg-gray-50 transition-colors"
+            className="bg-surface border border-border-custom rounded-lg p-4 hover:bg-bg-base transition-colors shadow-sm"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-text-primary">{displayName}</span>

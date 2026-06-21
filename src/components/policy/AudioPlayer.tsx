@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Download } from 'lucide-react';
+import Select from '@/components/ui/Select';
 
 interface AudioPlayerProps {
   src: string;
@@ -235,21 +236,22 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
           <label htmlFor="speed-select" className="text-sm text-text-secondary shrink-0">
             Speed
           </label>
-          <select
+          <Select
             id="speed-select"
-            value={playbackRate}
+            value={String(playbackRate)}
             onChange={(e) => {
               const rate = parseFloat(e.target.value);
               setPlaybackRate(rate);
               if (audioRef.current) audioRef.current.playbackRate = rate;
             }}
-            className="flex-1 sm:flex-none min-h-11 text-sm px-3 py-2 border border-border-custom rounded-md bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="0.5">0.5x</option>
-            <option value="1">1x</option>
-            <option value="1.5">1.5x</option>
-            <option value="2">2x</option>
-          </select>
+            options={[
+              { value: '0.5', label: '0.5x' },
+              { value: '1', label: '1x' },
+              { value: '1.5', label: '1.5x' },
+              { value: '2', label: '2x' },
+            ]}
+            containerClassName="flex-1 sm:flex-none"
+          />
         </div>
 
         <div className="flex items-center gap-2 flex-1 sm:flex-none">

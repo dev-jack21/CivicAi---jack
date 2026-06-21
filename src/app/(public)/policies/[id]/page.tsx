@@ -149,7 +149,7 @@ async function PolicyContent({ id }: { id: string }) {
 
   const { data: feedbackList } = await supabase
     .from('feedback')
-    .select('id, content, created_at, user:profiles(full_name, email)')
+    .select('id, content, created_at, user:user_id(full_name, email)')
     .eq('policy_id', id)
     .eq('status', 'unreviewed')
     .order('created_at', { ascending: false });

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import FeedbackTable from '@/components/admin/FeedbackTable';
+import Select from '@/components/ui/Select';
 
 interface FeedbackRow {
   id: string;
@@ -139,46 +140,28 @@ export default function AdminFeedbackPage() {
 
       <div className="bg-surface rounded-xl border border-border-custom p-6 shadow-sm">
         <div className="flex flex-wrap gap-4 mb-6">
-          <div className="flex-1 min-w-48">
-            <label
-              htmlFor="status-filter"
-              className="block text-sm font-medium text-text-secondary mb-1"
-            >
-              Status
-            </label>
-            <select
-              id="status-filter"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-border-custom rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="all">All Statuses</option>
-              <option value="unreviewed">Unreviewed</option>
-              <option value="reviewed">Reviewed</option>
-              <option value="flagged">Flagged</option>
-            </select>
-          </div>
-          <div className="flex-1 min-w-48">
-            <label
-              htmlFor="policy-filter"
-              className="block text-sm font-medium text-text-secondary mb-1"
-            >
-              Policy
-            </label>
-            <select
-              id="policy-filter"
-              value={policyFilter}
-              onChange={(e) => setPolicyFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-border-custom rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">All Policies</option>
-              {policies.map((policy) => (
-                <option key={policy.id} value={policy.id}>
-                  {policy.title}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            id="status-filter"
+            label="Status"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            options={[
+              { value: 'all', label: 'All Statuses' },
+              { value: 'unreviewed', label: 'Unreviewed' },
+              { value: 'reviewed', label: 'Reviewed' },
+              { value: 'flagged', label: 'Flagged' },
+            ]}
+            containerClassName="flex-1 min-w-48"
+          />
+          <Select
+            id="policy-filter"
+            label="Policy"
+            value={policyFilter}
+            onChange={(e) => setPolicyFilter(e.target.value)}
+            placeholder="All Policies"
+            options={policies.map((policy) => ({ value: policy.id, label: policy.title }))}
+            containerClassName="flex-1 min-w-48"
+          />
         </div>
 
         {error && (

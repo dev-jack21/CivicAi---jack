@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Loader2,
 } from 'lucide-react';
+import { Select, Input } from '@/components/ui';
 
 interface Policy {
   id: string;
@@ -203,15 +204,14 @@ function SearchContent() {
           className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none"
           aria-hidden="true"
         />
-        <input
+        <Input
           id="search-input"
           ref={inputRef}
           type="search"
           value={query}
           onChange={handleQueryChange}
           placeholder="Search by title, summary, or description…"
-          className="w-full pl-11 pr-12 py-3 border border-border-custom rounded-xl bg-surface text-text-primary placeholder-text-muted text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-          aria-label="Search policies"
+          className="pl-11 pr-12 py-3 rounded-xl"
           autoComplete="off"
         />
         {query && (
@@ -299,19 +299,16 @@ function SearchContent() {
             >
               Category
             </label>
-            <select
+            <Select
               id="category-filter"
               value={selectedCategory}
               onChange={(e) => handleFilterChange(e.target.value, selectedMinistry)}
-              className="w-full px-3 py-2 text-sm border border-border-custom rounded-lg bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">All Categories</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.slug}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+              options={[
+                { value: '', label: 'All Categories' },
+                ...categories.map((cat) => ({ value: cat.slug, label: cat.name })),
+              ]}
+              containerClassName="w-full"
+            />
           </div>
           <div>
             <label
@@ -320,19 +317,16 @@ function SearchContent() {
             >
               Ministry
             </label>
-            <select
+            <Select
               id="ministry-filter"
               value={selectedMinistry}
               onChange={(e) => handleFilterChange(selectedCategory, e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-border-custom rounded-lg bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              <option value="">All Ministries</option>
-              {ministries.map((min) => (
-                <option key={min} value={min}>
-                  {min}
-                </option>
-              ))}
-            </select>
+              options={[
+                { value: '', label: 'All Ministries' },
+                ...ministries.map((min) => ({ value: min, label: min })),
+              ]}
+              containerClassName="w-full"
+            />
           </div>
         </div>
       )}

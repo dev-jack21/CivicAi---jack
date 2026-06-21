@@ -253,7 +253,7 @@ export default function AdminPoliciesPage() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/policies/${policy.id}`}
-                        className="font-medium text-[#1B6CA8] hover:text-[#0D4F80] hover:underline"
+                        className="font-medium text-primary hover:text-primary-dark hover:underline"
                       >
                         {policy.title}
                       </Link>
@@ -268,7 +268,7 @@ export default function AdminPoliciesPage() {
                         {statusCfg.label}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-[#6B7280] max-w-[200px]">
+                    <td className="px-4 py-3 text-text-secondary max-w-[200px]">
                       {policy.summary ? (
                         <span className="text-xs text-text-secondary leading-relaxed">
                           {truncateSummary(policy.summary)}

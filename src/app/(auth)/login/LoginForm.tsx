@@ -61,10 +61,10 @@ export function LoginForm() {
   };
 
   return (
-    <div className="bg-white dark:bg-[#121212] border border-[#E5E7EB] dark:border-zinc-800 rounded-xl shadow-sm p-8 transition-colors">
+    <div className="bg-surface border border-border-custom rounded-xl shadow-sm p-8 transition-colors">
       {error && (
         <div
-          className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 rounded-md text-sm flex items-center gap-2"
+          className="mb-4 p-3 bg-red-50 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 rounded-md text-sm flex items-center gap-2"
           role="alert"
         >
           <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
@@ -76,7 +76,7 @@ export function LoginForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-[#6B7280] dark:text-zinc-300 mb-1.5"
+            className="block text-sm font-medium text-text-secondary text-text-secondary mb-1.5"
           >
             Email Address
           </label>
@@ -86,10 +86,8 @@ export function LoginForm() {
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
             aria-describedby={errors.email ? 'email-error' : undefined}
-            className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white dark:bg-zinc-900 text-[#111827] dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 ${
-              errors.email
-                ? 'border-red-500 focus:ring-red-500'
-                : 'border-[#E5E7EB] dark:border-zinc-700'
+            className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary text-text-primary placeholder-zinc-400 ${
+              errors.email ? 'border-red-500 focus:ring-red-500' : 'border-border-custom '
             }`}
             placeholder="you@example.com"
           />
@@ -108,7 +106,7 @@ export function LoginForm() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-[#6B7280] dark:text-zinc-300 mb-1.5"
+            className="block text-sm font-medium text-text-secondary text-text-secondary mb-1.5"
           >
             Password
           </label>
@@ -118,10 +116,8 @@ export function LoginForm() {
             {...register('password')}
             aria-invalid={errors.password ? 'true' : 'false'}
             aria-describedby={errors.password ? 'password-error' : undefined}
-            className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1B6CA8] focus:border-transparent text-sm transition-colors bg-white dark:bg-zinc-900 text-[#111827] dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 ${
-              errors.password
-                ? 'border-red-500 focus:ring-red-500'
-                : 'border-[#E5E7EB] dark:border-zinc-700'
+            className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-colors bg-surface text-text-primary text-text-primary placeholder-zinc-400 ${
+              errors.password ? 'border-red-500 focus:ring-red-500' : 'border-border-custom '
             }`}
             placeholder="Enter your password"
           />
@@ -140,7 +136,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full min-h-11 py-2.5 px-4 bg-[#1B6CA8] hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:dark:bg-zinc-800 disabled:dark:text-zinc-500 text-white font-medium rounded-md shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] text-sm cursor-pointer disabled:cursor-not-allowed"
+          className="w-full min-h-11 py-2.5 px-4 bg-primary hover:bg-[#0D4F80] disabled:bg-blue-300 disabled:text-text-primary0 text-white font-medium rounded-md shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary text-sm cursor-pointer disabled:cursor-not-allowed"
         >
           {isLoading ? 'Signing in...' : 'Sign in'}
         </button>
@@ -149,10 +145,10 @@ export function LoginForm() {
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#E5E7EB] dark:border-zinc-800" />
+            <div className="w-full border-t border-border-custom " />
           </div>
           <div className="relative flex justify-center text-xs">
-            <span className="px-2 bg-white dark:bg-[#121212] text-[#6B7280] dark:text-[#9CA3AF] transition-colors">
+            <span className="px-2 bg-surface text-text-secondary transition-colors">
               or continue with
             </span>
           </div>
@@ -162,7 +158,7 @@ export function LoginForm() {
           type="button"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="mt-4 w-full min-h-11 py-2 px-4 bg-white dark:bg-zinc-900 border border-[#E5E7EB] dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:bg-zinc-100 disabled:dark:bg-zinc-800 text-[#6B7280] dark:text-zinc-200 font-medium rounded-md shadow-sm transition-all flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B6CA8] cursor-pointer"
+          className="mt-4 w-full min-h-11 py-2 px-4 bg-surface border border-border-custom hover:bg-bg-base disabled:bg-zinc-100 text-text-secondary text-text-secondary font-medium rounded-md shadow-sm transition-all flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary cursor-pointer"
         >
           <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -186,11 +182,11 @@ export function LoginForm() {
         </button>
       </div>
 
-      <p className="mt-6 text-center text-sm text-[#6B7280] dark:text-[#9CA3AF]">
+      <p className="mt-6 text-center text-sm text-text-secondary">
         Don&apos;t have an account?{' '}
         <a
           href="/register"
-          className="text-[#1B6CA8] hover:text-[#0D4F80] dark:text-[#60A5FA] dark:hover:text-blue-400 font-medium transition-colors"
+          className="text-primary hover:text-primary-dark dark:text-[#60A5FA] font-medium transition-colors"
         >
           Sign up
         </a>

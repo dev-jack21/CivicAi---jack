@@ -6,7 +6,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-[#F9FAFB] dark:bg-[#000000] text-[#111827] dark:text-[#FFFFFF]">
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-bg-base text-text-primary">
       {/* Left Column - Branding and Specs Showcase */}
       <aside
         className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-[#0D4F80] to-[#1B6CA8] text-white relative overflow-hidden min-h-screen"
@@ -42,7 +42,7 @@ export default function AuthLayout({
             </h3>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-surface/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
                 1
               </div>
               <div>
@@ -54,7 +54,7 @@ export default function AuthLayout({
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-surface/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
                 2
               </div>
               <div>
@@ -67,7 +67,7 @@ export default function AuthLayout({
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-surface/10 flex items-center justify-center font-bold text-xs text-[#60A5FA]">
                 3
               </div>
               <div>
